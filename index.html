@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+        content="Hüseyin Ardıl Karasungur — Backend & Full Stack Developer skilled in Java, .NET and React.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%238b5cf6'/><text x='50%25' y='50%25' font-family='monospace' font-size='38' font-weight='bold' fill='white' dominant-baseline='central' text-anchor='middle'>HAK</text></svg>" />
+    <title>Hüseyin Ardıl Karasungur — Developer Portfolio</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hüseyin Ardıl Karasungur — Developer Portfolio">
+    <meta property="og:description"
+        content="Backend & Full Stack Developer skilled in Java, .NET and React. Open to new opportunities.">
+    <meta property="og:image" content="og-preview.png">
+    <meta property="og:url" content="https://karasungurhuseyinardil.github.io">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hüseyin Ardıl Karasungur — Developer Portfolio">
+    <meta name="twitter:description" content="Backend & Full Stack Developer skilled in Java, .NET and React.">
+    <meta name="twitter:image" content="og-preview.png">
+    <link rel="canonical" href="https://karasungurhuseyinardil.github.io">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="print.css" media="print">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function () {
+            // Buraya EmailJS panelinden (Account -> Public Key) aldığınız anahtarı eklemelisiniz
+            emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
+        })();
+    </script>
+    <!-- Scroll progress bar -->
+    <style>
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #8b5cf6, #6366f1, #06b6d4);
+            z-index: 9999;
+            transition: width .1s linear;
+            border-radius: 0 2px 2px 0;
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ═══════════════════════════════ LOADER ═══════════════════════════════ -->
+    <div class="loader-screen" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">HAK</span>
+                <span class="logo-bracket">/&gt;</span>
+            </div>
+            <div class="loader-code">
+                <div class="code-line" style="--d:0s"><span class="kw">const</span> developer = <span
+                        class="br">{</span></div>
+                <div class="code-line" style="--d:.15s">&nbsp;&nbsp;name: <span class="str">'Hüseyin Ardıl Karasungur'</span>,
+                </div>
+                <div class="code-line" style="--d:.3s">&nbsp;&nbsp;role: <span class="str">'Software Developer'</span>,
+                </div>
+                <div class="code-line" style="--d:.45s"><span class="br">}</span>;</div>
+            </div>
+            <div class="loader-progress-wrap">
+                <div class="loader-progress-bar" id="loaderBar"></div>
+            </div>
+            <div class="loader-percent" id="loaderPercent">0%</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ CURSOR ═══════════════════════════════ -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+    <header class="main-header" id="header">
+        <nav class="nav-container">
+            <a href="#home" class="nav-brand">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">HAK</span>
+                <span class="logo-bracket">/&gt;</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-section="home"> <i class="fas fa-house"></i>
+                    <span data-en="Home" data-tr="Ana Sayfa">Home</span></a>
+                <a href="#about" class="nav-link" data-section="about"> <i class="fas fa-user"></i>
+                    <span data-en="About" data-tr="Hakkımda">About</span></a>
+                <a href="#skills" class="nav-link" data-section="skills"> <i class="fas fa-code"></i>
+                    <span data-en="Skills" data-tr="Beceriler">Skills</span></a>
+                <a href="#experience" class="nav-link" data-section="experience"> <i class="fas fa-briefcase"></i>
+                    <span data-en="Experience" data-tr="Deneyim">Experience</span></a>
+                <a href="#projects" class="nav-link" data-section="projects"> <i class="fas fa-rocket"></i>
+                    <span data-en="Projects" data-tr="Projeler">Projects</span></a>
+                <a href="#contact" class="nav-link" data-section="contact"> <i class="fas fa-envelope"></i>
+                    <span data-en="Contact" data-tr="İletişim">Contact</span></a>
+            </div>
+
+            <div class="nav-controls">
+                <button class="lang-toggle" id="langToggle" aria-label="Toggle language" title="Switch to Turkish">
+                    <i class="fas fa-globe"></i> <span id="langLabel">TR</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ═══════════════════════════ HERO ═════════════════════════════════ -->
+        <section id="home" class="hero-section">
+            <canvas class="hero-canvas" id="heroCanvas"></canvas>
+            <div class="hero-glow-1"></div>
+            <div class="hero-glow-2"></div>
+
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-tag reveal-up">
+                        <span class="tag-dot"></span>
+                        <span data-en="Open to new opportunities" data-tr="Yeni fırsatlara açığım">Open to new
+                            opportunities</span>
+                    </div>
+                    <div class="hero-greeting reveal-up" style="--rd:.05s">
+                        <span data-en="Hello, I'm" data-tr="Merhaba, Ben">Hello, I'm</span>
+                    </div>
+                    <h1 class="hero-name reveal-up" style="--rd:.1s">
+                        <span class="name-line">
+                            <span class="name-code">const</span>
+                            <span class="name-main" id="heroName">Hüseyin Ardıl Karasungur</span>
+                            <span class="name-semi">;</span>
+                        </span>
+                    </h1>
+                    <div class="hero-role reveal-up" style="--rd:.15s">
+                        <span class="role-prefix">// </span>
+                        <span class="role-text" id="roleText">Software Developer</span>
+                        <span class="role-cursor">|</span>
+                    </div>
+                    <p class="hero-desc reveal-up" style="--rd:.2s">
+                        <span data-en="Full Stack Developer skilled in " data-tr="">Full Stack Developer skilled in </span>
+                        <span class="text-accent" data-en="Java, .NET and React" data-tr="Java, .NET ve React">Java,
+                            .NET and React</span>
+                        <span data-en="" data-tr=" konularında uzman bir yazılımcıyım"></span>.
+                        <span
+                            data-en="Experienced in developing APIs and building web applications. Motivated to learn new technologies and improve software development practices through practical projects."
+                            data-tr="API geliştirme ve web uygulamaları konusunda deneyimliyim. Pratik projelerle yeni teknolojiler öğrenmeye ve yazılım geliştirme pratiklerini iyileştirmeye motive olmuş biriyim.">Experienced
+                            in developing APIs and building web applications. Motivated to learn new
+                            technologies and improve software development practices through practical projects.</span>
+                    </p>
+                    <div class="hero-btns reveal-up" style="--rd:.25s">
+                        <a href="#contact" class="btn btn-primary" id="heroContactBtn">
+                            <span data-en="Get In Touch" data-tr="İletişime Geç">Get In Touch</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#projects" class="btn btn-ghost" id="heroProjectsBtn">
+                            <span data-en="View Projects" data-tr="Projelere Bak">View Projects</span>
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                    <div class="hero-social reveal-up" style="--rd:.3s">
+                        <a href="https://github.com/karasungurhuseyinardil" target="_blank" class="social-link"
+                            aria-label="GitHub" id="socialGithub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/huseyinardilkarasungur" target="_blank" class="social-link"
+                            aria-label="LinkedIn" id="socialLinkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:karasungurhuseyinardil@gmail.com" class="social-link" aria-label="Email"
+                            id="socialEmail">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="hero-visual reveal-right" style="--rd:.1s">
+                    <div class="profile-wrap">
+                        <div class="profile-ring"></div>
+                        <div class="profile-ring ring-2"></div>
+                        <div class="profile-avatar">
+                            <span class="avatar-initials">HAK</span>
+                        </div>
+                        <div class="profile-badge badge-java">
+                            <i class="fab fa-java"></i>
+                            <span>Java</span>
+                        </div>
+                        <div class="profile-badge badge-dotnet">
+                            <i class="fas fa-server"></i>
+                            <span>.NET</span>
+                        </div>
+                        <div class="profile-badge badge-react">
+                            <i class="fab fa-react"></i>
+                            <span>React</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#about" class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-line"></div>
+                <span data-en="Scroll down" data-tr="Aşağı kaydır">Scroll down</span>
+            </a>
+        </section>
+
+        <!-- ═══════════════════════════ ABOUT ════════════════════════════════ -->
+        <section id="about" class="section about-section">
+            <div class="section-container">
+                <div class="section-header reveal-up">
+                    <span class="section-tag" id="aboutTag">01 / about</span>
+                    <h2 class="section-title" id="aboutTitle">About <span class="text-gradient">Me</span></h2>
+                    <p class="section-sub" id="aboutSub">A little bit about who I am and what drives me</p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-text reveal-left">
+                        <p>
+                            I'm <strong>Hüseyin Ardıl Karasungur</strong>, a Backend & Full Stack Developer
+                            currently completing my <strong>B.S. in Computer Engineering</strong> at
+                            Doğuş University, Istanbul (Full Scholarship — graduating June 2025).
+                            I was ranked <strong>first in both my department and faculty</strong> upon admission.
+                        </p>
+                        <p>
+                            I specialize in building robust <strong>APIs and backend systems</strong> using
+                            Java, Spring Boot, and .NET, while also being capable on the frontend with
+                            React and JavaScript. I constantly seek to adopt clean architecture principles
+                            such as SOLID, OOP, and Design Patterns in every project I work on.
+                        </p>
+                        <p>
+                            I'm passionate about software craftsmanship, AI-driven applications, and
+                            contributing to meaningful products that reach real users — from cosmetics
+                            ingredient analyzers to professional networking platforms.
+                        </p>
+                        <div class="about-meta">
+                            <div class="meta-item" id="aboutLocation">
+                                <i class="fas fa-location-dot"></i>
+                                <span>Istanbul, Turkey</span>
+                            </div>
+                            <div class="meta-item" id="aboutStatus">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>B.S. Computer Engineering — Doğuş University (2020–2025), Full Scholarship</span>
+                            </div>
+                            <div class="meta-item" id="aboutEdu">
+                                <i class="fas fa-circle-check"></i>
+                                <span>Open to full-time opportunities</span>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+                            <a href="Huseyin_Ardil_Karasungur_CV.pdf" download class="btn btn-primary"
+                                id="downloadCvBtn">
+                                <i class="fas fa-download"></i>
+                                <span>Download CV</span>
+                            </a>
+                            <a href="#contact" class="btn btn-ghost" id="aboutContactBtn">
+                                <i class="fas fa-envelope"></i>
+                                <span>Contact Me</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="about-stats-panel reveal-right">
+                        <div class="stat-card" id="stat1">
+                            <div class="stat-num" data-count="4">0</div>
+                            <div class="stat-plus">+</div>
+                            <div class="stat-label">Projects<br>Shipped</div>
+                        </div>
+                        <div class="stat-card" id="stat2">
+                            <div class="stat-num" data-count="4">0</div>
+                            <div class="stat-plus">+</div>
+                            <div class="stat-label">Work<br>Experiences</div>
+                        </div>
+                        <div class="stat-card" id="stat3">
+                            <div class="stat-num" data-count="10">0</div>
+                            <div class="stat-plus">+</div>
+                            <div class="stat-label">Tech<br>Skills</div>
+                        </div>
+                        <div class="stat-card" id="stat4">
+                            <div class="stat-num" data-count="6">0</div>
+                            <div class="stat-plus">+</div>
+                            <div class="stat-label">Certifications<br>&amp; Awards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════ SKILLS ═══════════════════════════════ -->
+        <section id="skills" class="section skills-section">
+            <div class="section-container">
+                <div class="section-header reveal-up">
+                    <span class="section-tag" id="skillsTag">02 / skills</span>
+                    <h2 class="section-title" id="skillsTitle">Tech <span class="text-gradient">Stack</span></h2>
+                    <p class="section-sub" id="skillsSub">Technologies I use to bring ideas to life</p>
+                </div>
+
+                <div class="skills-tabs reveal-up" style="--rd:.1s">
+                    <button class="skills-tab active" data-tab="backend" id="tabBackend">Backend</button>
+                    <button class="skills-tab" data-tab="frontend" id="tabFrontend">Frontend</button>
+                    <button class="skills-tab" data-tab="tools" id="tabTools">Practices & Tools</button>
+                </div>
+
+                <!-- BACKEND -->
+                <div class="skills-panel active" data-panel="backend" id="panelBackend">
+                    <div class="skill-cards">
+                        <div class="skill-card reveal-up" style="--rd:.0s">
+                            <div class="skill-icon" style="--ic:#f89820"><i class="fab fa-java"></i></div>
+                            <div class="skill-info"><span class="skill-name">Java</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.06s">
+                            <div class="skill-icon" style="--ic:#6db33f"><i class="fas fa-leaf"></i></div>
+                            <div class="skill-info"><span class="skill-name">Spring Boot</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="84"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.12s">
+                            <div class="skill-icon" style="--ic:#512bd4"><i class="fas fa-server"></i></div>
+                            <div class="skill-info"><span class="skill-name">.NET / C#</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.18s">
+                            <div class="skill-icon" style="--ic:#339933"><i class="fab fa-node-js"></i></div>
+                            <div class="skill-info"><span class="skill-name">Node.js</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="72"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.24s">
+                            <div class="skill-icon" style="--ic:#336791"><i class="fas fa-database"></i></div>
+                            <div class="skill-info"><span class="skill-name">SQL / Databases</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="82"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.30s">
+                            <div class="skill-icon" style="--ic:#00ADD8"><i class="fas fa-code"></i></div>
+                            <div class="skill-info"><span class="skill-name">Go</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="65"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FRONTEND -->
+                <div class="skills-panel" data-panel="frontend" id="panelFrontend">
+                    <div class="skill-cards">
+                        <div class="skill-card reveal-up" style="--rd:.0s">
+                            <div class="skill-icon" style="--ic:#61DAFB"><i class="fab fa-react"></i></div>
+                            <div class="skill-info"><span class="skill-name">React</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.06s">
+                            <div class="skill-icon" style="--ic:#F7DF1E"><i class="fab fa-js"></i></div>
+                            <div class="skill-info"><span class="skill-name">JavaScript</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="83"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.12s">
+                            <div class="skill-icon" style="--ic:#3178C6"><i class="fas fa-code"></i></div>
+                            <div class="skill-info"><span class="skill-name">TypeScript</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.18s">
+                            <div class="skill-icon" style="--ic:#7F52FF"><i class="fas fa-mobile-alt"></i></div>
+                            <div class="skill-info"><span class="skill-name">Kotlin</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="68"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.24s">
+                            <div class="skill-icon" style="--ic:#3776AB"><i class="fab fa-python"></i></div>
+                            <div class="skill-info"><span class="skill-name">Python</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="67"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.30s">
+                            <div class="skill-icon" style="--ic:#E34F26"><i class="fab fa-html5"></i></div>
+                            <div class="skill-info"><span class="skill-name">HTML5 / CSS3</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOOLS & PRACTICES -->
+                <div class="skills-panel" data-panel="tools" id="panelTools">
+                    <div class="skill-cards">
+                        <div class="skill-card reveal-up" style="--rd:.0s">
+                            <div class="skill-icon" style="--ic:#F05032"><i class="fab fa-git-alt"></i></div>
+                            <div class="skill-info"><span class="skill-name">Git / GitHub</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.06s">
+                            <div class="skill-icon" style="--ic:#2088FF"><i class="fas fa-code-branch"></i></div>
+                            <div class="skill-info"><span class="skill-name">CI/CD</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="72"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.12s">
+                            <div class="skill-icon" style="--ic:#a78bfa"><i class="fas fa-cubes"></i></div>
+                            <div class="skill-info"><span class="skill-name">OOP & SOLID</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.18s">
+                            <div class="skill-icon" style="--ic:#06b6d4"><i class="fas fa-diagram-project"></i></div>
+                            <div class="skill-info"><span class="skill-name">API Development</span><span
+                                    class="skill-level">Advanced</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="89"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.24s">
+                            <div class="skill-icon" style="--ic:#10b981"><i class="fas fa-sync-alt"></i></div>
+                            <div class="skill-info"><span class="skill-name">Agile / Scrum</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="78"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card reveal-up" style="--rd:.30s">
+                            <div class="skill-icon" style="--ic:#f59e0b"><i class="fas fa-vial"></i></div>
+                            <div class="skill-info"><span class="skill-name">Unit Testing</span><span
+                                    class="skill-level">Intermediate</span></div>
+                            <div class="skill-bar-wrap">
+                                <div class="skill-bar" data-w="74"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════ EXPERIENCE ════════════════════════════ -->
+        <section id="experience" class="section experience-section">
+            <div class="section-container">
+                <div class="section-header reveal-up">
+                    <span class="section-tag" id="expTag">03 / experience</span>
+                    <h2 class="section-title" id="expTitle">Work <span class="text-gradient">History</span></h2>
+                    <p class="section-sub" id="expSub">My professional journey so far</p>
+                </div>
+
+                <div class="timeline">
+                    <!-- 1 -->
+                    <div class="timeline-item reveal-left" id="exp1">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-header">
+                                <div class="tl-left">
+                                    <h3 class="tl-role">Backend Developer</h3>
+                                    <div class="tl-company" id="exp1Company">
+                                        <i class="fas fa-building"></i>
+                                        <span data-en="Bilgera Software A.Ş." data-tr="Bilgera Yazılım A.Ş.">Bilgera
+                                            Software A.Ş.</span>
+                                    </div>
+                                </div>
+                                <div class="tl-right">
+                                    <span class="tl-date" id="exp1Date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span data-en="Aug 2025 – Present" data-tr="Ağu 2025 – Günümüz">Aug 2025 –
+                                            Present</span>
+                                    </span>
+                                    <span class="tl-type">Full-time · Istanbul, TR</span>
+                                </div>
+                            </div>
+                            <p class="tl-desc">
+                                Worked on backend development processes for the <strong>Repzone</strong> platform using
+                                .NET,
+                                focusing on API development and improving existing services. Also took on the
+                                <strong>Product Owner</strong> role for the Danone project — contributing to requirement
+                                definition, monitoring the development process, and facilitating communication between
+                                partners.
+                            </p>
+                            <div class="tl-tags">
+                                <span>.NET</span><span>API Development</span><span>Product
+                                    Ownership</span><span>Agile</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2 -->
+                    <div class="timeline-item reveal-right" id="exp2">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-header">
+                                <div class="tl-left">
+                                    <h3 class="tl-role">Backend Developer</h3>
+                                    <div class="tl-company" id="exp2Company">
+                                        <i class="fas fa-building"></i>
+                                        <span data-en="Turkcell" data-tr="Turkcell">Turkcell</span>
+                                    </div>
+                                </div>
+                                <div class="tl-right">
+                                    <span class="tl-date" id="exp2Date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span data-en="Aug 2024 – Dec 2024" data-tr="Ağu 2024 – Ara 2024">Aug 2024 – Dec
+                                            2024</span>
+                                    </span>
+                                    <span class="tl-type">Part-time · Istanbul, TR</span>
+                                </div>
+                            </div>
+                            <p class="tl-desc">
+                                Worked as a part-time backend developer in the <strong>Corporate Customer Relations
+                                    Department</strong>.
+                                Contributed to backend systems using <strong>Java</strong> and <strong>Spring</strong>,
+                                helping
+                                maintain and extend existing enterprise-grade services.
+                            </p>
+                            <div class="tl-tags">
+                                <span>Java</span><span>Spring</span><span>Backend Systems</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 -->
+                    <div class="timeline-item reveal-left" id="exp3">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-header">
+                                <div class="tl-left">
+                                    <h3 class="tl-role">Backend Development Intern</h3>
+                                    <div class="tl-company" id="exp3Company">
+                                        <i class="fas fa-building"></i>
+                                        <span data-en="Tekhnelogos" data-tr="Tekhnelogos">Tekhnelogos</span>
+                                    </div>
+                                </div>
+                                <div class="tl-right">
+                                    <span class="tl-date" id="exp3Date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span data-en="Jun 2024 – Aug 2024" data-tr="Haz 2024 – Ağu 2024">Jun 2024 – Aug
+                                            2024</span>
+                                    </span>
+                                    <span class="tl-type">Internship · Istanbul, TR</span>
+                                </div>
+                            </div>
+                            <p class="tl-desc">
+                                Developed an <strong>OKR (Objectives and Key Results)</strong> tracking system using
+                                .NET,
+                                enabling internal goal monitoring and reporting across teams.
+                            </p>
+                            <div class="tl-tags">
+                                <span>.NET</span><span>OKR Systems</span><span>Reporting</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 -->
+                    <div class="timeline-item reveal-right" id="exp4">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-header">
+                                <div class="tl-left">
+                                    <h3 class="tl-role">Mobile App Development Intern</h3>
+                                    <div class="tl-company" id="exp4Company">
+                                        <i class="fas fa-building"></i>
+                                        <span data-en="Kafein Technology Solutions"
+                                            data-tr="Kafein Teknoloji Çözümleri">Kafein Technology Solutions</span>
+                                    </div>
+                                </div>
+                                <div class="tl-right">
+                                    <span class="tl-date" id="exp4Date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span data-en="Jul 2022 – Aug 2022" data-tr="Tem 2022 – Ağu 2022">Jul 2022 – Aug
+                                            2022</span>
+                                    </span>
+                                    <span class="tl-type">Internship · Istanbul, TR</span>
+                                </div>
+                            </div>
+                            <p class="tl-desc">
+                                Developed a <strong>weather application</strong> using Java and Android Studio,
+                                integrating real-time API data and modern UI components.
+                            </p>
+                            <div class="tl-tags">
+                                <span>Java</span><span>Android Studio</span><span>REST API</span><span>Mobile UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="certs-section reveal-up" style="--rd:.1s;margin-top:4rem">
+                    <h3 class="certs-title" id="certsMainTitle">Trainings &amp; Certifications</h3>
+                    <div class="certs-grid">
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name"
+                                    data-en="IBM Full Stack Software Developer Professional Certificate"
+                                    data-tr="IBM Full Stack Yazılım Geliştirici Sertifikası">IBM Full Stack Software
+                                    Developer Professional Certificate</span>
+                                <span class="cert-date" id="cert1Date" data-en="Feb 2025 – Jul 2025"
+                                    data-tr="Şub 2025 – Tem 2025">Feb 2025 – Jul 2025</span>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fab fa-android"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name" data-en="Android App Development with Kotlin & Java — Udemy"
+                                    data-tr="Kotlin & Java ile Android Uygulama Geliştirme — Udemy">Android App
+                                    Development with Kotlin & Java — Udemy</span>
+                                <span class="cert-date" id="cert2Date" data-en="Jul 2023 – Jan 2024"
+                                    data-tr="Tem 2023 – Oca 2024">Jul 2023 – Jan 2024</span>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas fa-server"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name" data-en=".NET Fundamentals — Udemy"
+                                    data-tr=".NET Temelleri — Udemy">.NET Fundamentals — Udemy</span>
+                                <span class="cert-date" id="cert3Date" data-en="Mar 2024 – Jun 2024"
+                                    data-tr="Mar 2024 – Haz 2024">Mar 2024 – Jun 2024</span>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name" data-en="McKinsey Forward Program"
+                                    data-tr="McKinsey Forward Programı">McKinsey Forward Program</span>
+                                <span class="cert-date" id="cert4Date" data-en="Nov 2023 – Mar 2024"
+                                    data-tr="Kas 2023 – Mar 2024">Nov 2023 – Mar 2024</span>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas fa-university"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name" data-en="Aspire Leaders Program — Harvard & Aspire Institute"
+                                    data-tr="Aspire Liderlik Programı — Harvard & Aspire Institute">Aspire Leaders
+                                    Program — Harvard & Aspire Institute</span>
+                                <span class="cert-date" id="cert5Date" data-en="Jun 2023 – Jan 2024"
+                                    data-tr="Haz 2023 – Oca 2024">Jun 2023 – Jan 2024</span>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="cert-info">
+                                <span class="cert-name" data-en="TÜBİTAK Research Projects Competition Finalist"
+                                    data-tr="TÜBİTAK Araştırma Projeleri Yarışması Finalisti">TÜBİTAK Research Projects
+                                    Competition Finalist</span>
+                                <span class="cert-date" id="cert6Date" data-en="2017 &amp; 2018"
+                                    data-tr="2017 &amp; 2018">2017 &amp; 2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volunteer Experience -->
+                <div class="certs-section reveal-up" style="--rd:.15s;margin-top:3rem">
+                    <h3 class="certs-title" id="volSectionTitle">Volunteer <span class="text-gradient">Experience</span>
+                    </h3>
+                    <div class="volunteer-grid">
+                        <div class="volunteer-card" id="vol1">
+                            <div class="vol-icon"><i class="fas fa-globe"></i></div>
+                            <div class="vol-body">
+                                <h4 class="vol-title">Business Development Leader</h4>
+                                <div class="vol-org">AIESEC in Istanbul Asia</div>
+                                <p class="vol-desc">Led business development initiatives and engaged with AIESEC members
+                                    to expand partnership networks across Istanbul.</p>
+                                <span class="vol-date"><i class="fas fa-calendar"></i> <span>Mar 2023 – Aug
+                                        2023</span></span>
+                            </div>
+                        </div>
+                        <div class="volunteer-card" id="vol2">
+                            <div class="vol-icon"><i class="fas fa-gamepad"></i></div>
+                            <div class="vol-body">
+                                <h4 class="vol-title">Gamification Volunteer</h4>
+                                <div class="vol-org">GamFed Turkey</div>
+                                <p class="vol-desc">Applied gamification strategies to improve motivation and
+                                    performance in non-gaming environments and organizations.</p>
+                                <span class="vol-date"><i class="fas fa-calendar"></i> <span>Nov 2022 – Sep
+                                        2023</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════ PROJECTS ════════════════════════════= -->
+        <section id="projects" class="section projects-section">
+            <div class="section-container">
+                <div class="section-header reveal-up">
+                    <span class="section-tag" id="projTag">04 / projects</span>
+                    <h2 class="section-title" id="projTitle">Featured <span class="text-gradient">Projects</span></h2>
+                    <p class="section-sub" id="projSub">A selection of work I'm proud of</p>
+                </div>
+
+                <div class="projects-filter reveal-up" style="--rd:.1s">
+                    <button class="filter-btn active" data-filter="all" id="filterAll" data-en="All"
+                        data-tr="Tümü">All</button>
+                    <button class="filter-btn" data-filter="backend" id="filterBackend" data-en="Backend"
+                        data-tr="Backend">Backend</button>
+                    <button class="filter-btn" data-filter="fullstack" id="filterFullstack" data-en="Full Stack"
+                        data-tr="Full Stack">Full Stack</button>
+                    <button class="filter-btn" data-filter="mobile" id="filterMobile" data-en="Mobile"
+                        data-tr="Mobil">Mobile</button>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Cosmalyze -->
+                    <article class="project-card reveal-up" data-category="mobile" data-repo="Cosmalyze"
+                        style="--rd:.0s" id="proj1">
+                        <div class="project-img">
+                            <div class="project-img-placeholder" style="--ph:#8b5cf6">
+                                <i class="fas fa-spray-can"></i>
+                            </div>
+                            <div class="project-overlay">
+                                <a href="https://github.com/karasungurhuseyinardil/Cosmalyze" target="_blank"
+                                    class="proj-link" aria-label="View on GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-type">Mobile · AI</div>
+                            <h3 class="project-title">Cosmalyze</h3>
+                            <p class="project-desc">
+                                Enables barcode scanning and ingredient analysis for cosmetics. Provides
+                                AI-driven personalized product recommendations powered by ML Kit.
+                            </p>
+                            <div class="project-tech">
+                                <span>.NET</span><span>ML Kit</span><span>Kotlin</span><span>AI</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Unet -->
+                    <article class="project-card reveal-up" data-category="fullstack" data-repo="Unet" style="--rd:.08s"
+                        id="proj2">
+                        <div class="project-img">
+                            <div class="project-img-placeholder" style="--ph:#06b6d4">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="project-overlay">
+                                <a href="https://github.com/karasungurhuseyinardil/Unet" target="_blank"
+                                    class="proj-link" aria-label="View on GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-type">Full Stack</div>
+                            <h3 class="project-title">Unet — Your Network</h3>
+                            <p class="project-desc">
+                                A .NET-based platform for professionals to showcase their networks, supporting
+                                authentication, data management, and a fully responsive UI.
+                            </p>
+                            <div class="project-tech">
+                                <span>.NET</span><span>Authentication</span><span>REST API</span><span>Responsive
+                                    UI</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- E-Commerce -->
+                    <article class="project-card reveal-up" data-category="backend" data-repo="E-Commerce-Application"
+                        style="--rd:.16s" id="proj3">
+                        <div class="project-img">
+                            <div class="project-img-placeholder" style="--ph:#f59e0b">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="project-overlay">
+                                <a href="https://github.com/karasungurhuseyinardil/E-Commerce-Application"
+                                    target="_blank" class="proj-link" aria-label="View on GitHub"><i
+                                        class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-type">Backend</div>
+                            <h3 class="project-title">E-Commerce Application</h3>
+                            <p class="project-desc">
+                                Java-based e-commerce system supporting registration, login, product browsing,
+                                cart management, checkout flow, and order tracking.
+                            </p>
+                            <div class="project-tech">
+                                <span>Java</span><span>Spring Boot</span><span>SQL</span><span>REST API</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Streaming -->
+                    <article class="project-card reveal-up" data-category="fullstack" data-repo="Streaming-Service"
+                        style="--rd:.24s" id="proj4">
+                        <div class="project-img">
+                            <div class="project-img-placeholder" style="--ph:#ef4444">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="project-overlay">
+                                <a href="https://github.com/karasungurhuseyinardil/Streaming-Service" target="_blank"
+                                    class="proj-link" aria-label="View on GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-type">Frontend</div>
+                            <h3 class="project-title">Streaming Service</h3>
+                            <p class="project-desc">
+                                Frontend of a streaming platform built with JavaScript, featuring responsive
+                                layout design and smooth media preview UI components.
+                            </p>
+                            <div class="project-tech">
+                                <span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>Responsive</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════ CONTACT ════════════════════════════= -->
+        <section id="contact" class="section contact-section">
+            <div class="section-container">
+                <div class="section-header reveal-up">
+                    <span class="section-tag" id="contactTag">05 / contact</span>
+                    <h2 class="section-title" id="contactTitle">Let's <span class="text-gradient">Connect</span></h2>
+                    <p class="section-sub" id="contactSub">Have a project or opportunity in mind? I'd love to hear about
+                        it.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-info reveal-left">
+                        <h3>Get In Touch</h3>
+                        <p>
+                            I'm currently open to full-time positions and freelance projects. Whether you have
+                            a role to discuss or just want to say hello — my inbox is always open!
+                        </p>
+
+                        <div class="contact-items">
+                            <a href="mailto:karasungurhuseyinardil@gmail.com" class="contact-item" id="contactEmail">
+                                <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="ci-text">
+                                    <span class="ci-label">Email</span>
+                                    <span class="ci-value">karasungurhuseyinardil@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <a href="https://linkedin.com/in/huseyinardilkarasungur" target="_blank"
+                                class="contact-item" id="contactLinkedin">
+                                <div class="ci-icon"><i class="fab fa-linkedin-in"></i></div>
+                                <div class="ci-text">
+                                    <span class="ci-label">LinkedIn</span>
+                                    <span class="ci-value">linkedin.com/in/huseyinardilkarasungur</span>
+                                </div>
+                            </a>
+                            <a href="https://github.com/karasungurhuseyinardil" target="_blank" class="contact-item"
+                                id="contactGithub">
+                                <div class="ci-icon"><i class="fab fa-github"></i></div>
+                                <div class="ci-text">
+                                    <span class="ci-label">GitHub</span>
+                                    <span class="ci-value">github.com/karasungurhuseyinardil</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrap reveal-right">
+                        <form class="contact-form" id="contactForm" novalidate>
+                            <div class="form-group">
+                                <label for="formName">Name</label>
+                                <input type="text" id="formName" name="name" placeholder="Your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="formEmail">Email</label>
+                                <input type="email" id="formEmail" name="email" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="formSubject">Subject</label>
+                                <input type="text" id="formSubject" name="subject"
+                                    placeholder="Job opportunity / Project inquiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="formMessage">Message</label>
+                                <textarea id="formMessage" name="message" rows="5" placeholder="Tell me more…"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full" id="formSubmitBtn">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <div class="form-success" id="formSuccess">
+                                <i class="fas fa-circle-check"></i>
+                                <span>Message sent! I'll get back to you soon.</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">HAK</span>
+                <span class="logo-bracket">/&gt;</span>
+            </div>
+            <p class="footer-copy">
+                <span id="footerText">© 2026 Hüseyin Ardıl Karasungur</span>
+            </p>
+            <div class="footer-social">
+                <a href="https://github.com/karasungurhuseyinardil" target="_blank" aria-label="GitHub"
+                    id="footerGithub"> <i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/huseyinardilkarasungur" target="_blank" aria-label="LinkedIn"
+                    id="footerLinkedin"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:karasungurhuseyinardil@gmail.com" aria-label="Email" id="footerEmail"> <i
+                        class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-top" id="backTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="main.js"></script>
+    <script>
+        /* Register Service Worker */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => { });
+            });
+        }
+    </script>
+</body>
+
+</html>

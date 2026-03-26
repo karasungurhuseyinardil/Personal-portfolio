@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════════
+   PRINT STYLESHEET — Portfolio printable / PDF version
+   Hide UI chrome; show clean single-column layout
+═══════════════════════════════════════════════════════════ */
+@media print {
+
+    /* Hide interactive / visual-only elements */
+    #header,
+    .loader,
+    #heroCanvas,
+    .cursor-dot,
+    .cursor-ring,
+    .scroll-progress,
+    .back-top,
+    .scroll-indicator,
+    .profile-ring,
+    .hero-social,
+    .hero-btns,
+    .skills-tabs,
+    .projects-filter,
+    #langToggle,
+    .toast-container,
+    .volunteer-grid .vol-icon,
+    .section-tag,
+    main>section#home {
+        display: none !important;
+    }
+
+    /* Base reset for print */
+    *,
+    *::before,
+    *::after {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        color: #111 !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    body {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 11pt;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Single column layout */
+    .about-grid,
+    .skills-panel .skill-cards,
+    .certs-grid,
+    .volunteer-grid,
+    .projects-grid,
+    .contact-grid {
+        display: block !important;
+        columns: 1 !important;
+    }
+
+    /* Section breaks */
+    section {
+        page-break-before: always;
+        padding: 1.5rem 0 !important;
+    }
+
+    section:first-of-type {
+        page-break-before: auto;
+    }
+
+    /* Headings */
+    .section-title {
+        font-size: 18pt;
+        font-weight: 700;
+        border-bottom: 2pt solid #8b5cf6;
+        padding-bottom: .3rem;
+        margin-bottom: 1rem;
+        color: #111 !important;
+    }
+
+    /* Print skill bars as text percentage */
+    .skill-bar-wrap {
+        display: none;
+    }
+
+    /* Show page URL at bottom */
+    @page {
+        margin: 1.5cm 2cm;
+    }
+
+    a::after {
+        content: ' (' attr(href) ')';
+        font-size: 8pt;
+        color: #555 !important;
+    }
+
+    /* Skip href display for anchors */
+    a[href^="#"]::after {
+        content: '';
+    }
+}
