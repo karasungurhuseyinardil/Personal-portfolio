@@ -425,11 +425,14 @@ function startReveal() {
     const TEMPLATE_ID = 'template_portfolio'; 
     
     const templateParams = {
-      from_name: name.value,
+      from_name:  name.value,
+      name:       name.value,
       from_email: email.value,
-      subject: subject.value,
-      message: message.value,
-      to_email: 'karasungurhuseyinardil@gmail.com'
+      subject:    subject.value,
+      message:    message.value,
+      date:       new Date().toLocaleDateString('tr-TR'),
+      time:       new Date().toLocaleTimeString('tr-TR'),
+      to_email:   'karasungurhuseyinardil@gmail.com'
     };
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
