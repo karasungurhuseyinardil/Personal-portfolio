@@ -99,21 +99,14 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   const ring = $('#cursorRing');
   if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
 
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
   document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
+    const x = e.clientX;
+    const y = e.clientY;
+    dot.style.left  = x + 'px';
+    dot.style.top   = y + 'px';
+    ring.style.left = x + 'px';
+    ring.style.top  = y + 'px';
   });
-
-  (function animateRing() {
-    rx += (mx - rx) * .12;
-    ry += (my - ry) * .12;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animateRing);
-  })();
 
   // Hover effect on interactive elements
   const hoverEls = 'a, button, .skill-card, .project-card, .stat-card, .contact-item';
@@ -420,28 +413,51 @@ function startReveal() {
     submitBtn.disabled = true;
 
     // --- EMAILJS INTEGRATION ---
-    // Bu değerleri https://dashboard.emailjs.com/admin adresinden alıp özelleştirebilirsiniz
-    const SERVICE_ID  = 'service_default'; 
-    const TEMPLATE_ID = 'template_portfolio'; 
+    // Bu değerler config.js dosyasından (GİTHUBA EKLENMEZ) alınır.
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS SDK not loaded!');
+      showToast(isTr ? 'Email servisi yüklenemedi, lütfen sayfayı yenileyin.' : 'Email service not loaded, please refresh.', 'error');
+      submitBtn.disabled = false;
+      return;
+    }
+
+    const config = window.PORTFOLIO_CONFIG || {};
+    const SERVICE_ID  = config.EMAILJS_SERVICE_ID || 'service_default'; 
+    const TEMPLATE_ID = config.EMAILJS_TEMPLATE_ID || 'template_oti8y65'; 
+    const PUBLIC_KEY  = config.EMAILJS_PUBLIC_KEY;
     
     const templateParams = {
-      from_name:  name.value,
       name:       name.value,
+      from_name:  name.value,
       from_email: email.value,
       subject:    subject.value,
       message:    message.value,
       date:       new Date().toLocaleDateString('tr-TR'),
       time:       new Date().toLocaleTimeString('tr-TR'),
-      to_email:   'karasungurhuseyinardil@gmail.com'
+      to_email:   config.EMAILJS_RECEIVER_EMAIL || 'ardilkarasungur12@gmail.com'
     };
 
+    console.log('EmailJS gönderiliyor...', { SERVICE_ID, TEMPLATE_ID, templateParams });
+
+    // EmailJS v4: init() ile public key zaten ayarlandı, send() sadece 3 parametre alır
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
-      .then(() => {
+      .then((response) => {
+        console.log('EmailJS SUCCESS!', response.status, response.text);
         showToast(isTr ? 'Mesaj gönderildi! En kısa sürede döneceğim.' : "Message sent! I'll get back to you soon.", 'success');
         form.reset();
       })
       .catch((err) => {
-        console.error('EmailJS Error:', err);
+        console.error('EmailJS Full Error Object:', JSON.stringify(err));
+        const errorMsg = (err && err.text) || (err && err.message) || String(err);
+        console.error('EmailJS Error Message:', errorMsg);
+        
+        if (errorMsg.toLowerCase().includes('service')) {
+          console.warn('HATA: EMAILJS_SERVICE_ID geçersiz. config.js içindeki EMAILJS_SERVICE_ID değerini kontrol edin ("service_xxxx" formatında olmalı).');
+        }
+        if (errorMsg.toLowerCase().includes('template')) {
+          console.warn('HATA: EMAILJS_TEMPLATE_ID geçersiz. config.js içindeki EMAILJS_TEMPLATE_ID değerini kontrol edin.');
+        }
+
         showToast(isTr ? 'Bir hata oluştu, lütfen doğrudan e-posta gönderin.' : 'Error! Please send an email directly.', 'error');
       })
       .finally(() => {
@@ -691,10 +707,10 @@ function showToast(msg, type = 'success') {
       'proj4.type': 'Frontend',      'proj4.desc': 'Frontend of a streaming platform built with JavaScript, featuring responsive layout design and smooth media preview UI components.',
       /* contact */
       'contact.h3': 'Get In Touch',
-      'contact.p':  "I'm currently open to full-time positions and freelance projects. Whether you have a role to discuss or just want to say hello — my inbox is always open!",
+      'contact.p':  "I'm currently open to full-time positions and freelance projects. Whether you have a role to discuss or just want to say hello my inbox is always open!",
       'lbl.email': 'Email', 'lbl.linkedin': 'LinkedIn', 'lbl.github': 'GitHub',
       'form.lbl.name': 'Name', 'form.lbl.email': 'Email', 'form.lbl.subject': 'Subject', 'form.lbl.message': 'Message',
-      'form.ph.name': 'Your full name', 'form.ph.email': 'your@email.com',
+      'form.ph.name': 'Your full name', 'form.ph.email': 'mail@mail.com',
       'form.ph.subject': 'Job opportunity / Project inquiry', 'form.ph.msg': 'Tell me more…',
       'form.submit': 'Send Message', 'form.success': "Message sent! I'll get back to you soon.",
       /* footer */
@@ -757,7 +773,7 @@ function showToast(msg, type = 'success') {
       'contact.p':  'Tam zamanlı pozisyonlara ve freelance projelere açığım. Bir fırsat görüşmek ya da sadece merhaba demek ister misiniz? Gelen kutum her zaman açık!',
       'lbl.email': 'E-posta', 'lbl.linkedin': 'LinkedIn', 'lbl.github': 'GitHub',
       'form.lbl.name': 'Ad Soyad', 'form.lbl.email': 'E-posta', 'form.lbl.subject': 'Konu', 'form.lbl.message': 'Mesaj',
-      'form.ph.name': 'Adınız ve soyadınız', 'form.ph.email': 'sizin@email.com',
+      'form.ph.name': 'Adınız ve soyadınız', 'form.ph.email': 'mail@mail.com',
       'form.ph.subject': 'İş fırsatı / Proje teklifi', 'form.ph.msg': 'Daha fazla bilgi verin...',
       'form.submit': 'Mesaj Gönder', 'form.success': 'Mesaj gönderildi! En kısa sürede geri döneceğim.',
       'footer.copy': '© 2026 Hüseyin Ardıl Karasungur',

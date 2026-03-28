@@ -34,12 +34,26 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="print.css" media="print">
+    <!-- Local Configuration -->
+    <script src="config.js"></script>
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         (function () {
-            // Buraya EmailJS panelinden (Account -> Public Key) aldığınız anahtarı eklemelisiniz
-            emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
+            var cfg = window.PORTFOLIO_CONFIG || {};
+            if (!cfg.EMAILJS_PUBLIC_KEY) {
+                console.error('[EmailJS] EMAILJS_PUBLIC_KEY bulunamadı. config.js dosyasını kontrol edin.');
+                return;
+            }
+            if (!cfg.EMAILJS_SERVICE_ID || cfg.EMAILJS_SERVICE_ID === 'service_default') {
+                console.warn('[EmailJS] EMAILJS_SERVICE_ID eksik veya varsayılan değerde. config.js dosyasını güncelleyin.');
+            }
+            try {
+                emailjs.init({ publicKey: cfg.EMAILJS_PUBLIC_KEY });
+                console.log('[EmailJS] SDK başarıyla başlatıldı. Service:', cfg.EMAILJS_SERVICE_ID);
+            } catch (e) {
+                console.error('[EmailJS] init() hatası:', e);
+            }
         })();
     </script>
     <!-- Scroll progress bar -->
@@ -868,7 +882,7 @@
                         <h3>Get In Touch</h3>
                         <p>
                             I'm currently open to full-time positions and freelance projects. Whether you have
-                            a role to discuss or just want to say hello — my inbox is always open!
+                            a role to discuss or just want to say hello my inbox is always open!
                         </p>
 
                         <div class="contact-items">
@@ -907,7 +921,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="formEmail">Email</label>
-                                <input type="email" id="formEmail" name="email" placeholder="your@email.com" required>
+                                <input type="email" id="formEmail" name="email" placeholder="mail@mail.com" required>
                             </div>
                             <div class="form-group">
                                 <label for="formSubject">Subject</label>
