@@ -70,6 +70,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
 }
 
 body {
@@ -528,6 +529,8 @@ body:not(:hover) .cursor-ring {
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
 }
 
 .section-container {
@@ -609,6 +612,8 @@ body:not(:hover) .cursor-ring {
     position: relative;
     overflow: hidden;
     padding-top: var(--nav-h);
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
 }
 
 .hero-canvas {
@@ -1592,6 +1597,8 @@ body:not(:hover) .cursor-ring {
     background: var(--clr-bg);
     border-top: 1px solid var(--clr-border);
     padding: 2rem 0;
+    scroll-snap-align: end;
+    scroll-snap-stop: normal;
 }
 
 .footer-container {

@@ -178,7 +178,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   // Exact mathematical active section detection
   function updateActiveSection() {
-    if (isClickScrolling) return;
+    if (isClickScrolling || isWheelLocked) return;
 
     let activeId = null;
     let maxVisibleHeight = 0;
@@ -247,6 +247,79 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
       }, 800); // 800ms covers CSS smooth scroll duration
     });
   });
+
+  // ─── DIRECT SECTION-TO-SECTION WHEEL (DESKTOP) ───
+  let isWheelLocked = false;
+  
+  window.addEventListener('wheel', (e) => {
+    // Only apply strict wheel jack on Desktop to preserve mobile touch ease
+    if (window.innerWidth < 992) return;
+
+    // Ignore tiny trackpad twitches
+    if (Math.abs(e.deltaY) < 30) return;
+
+    // Prevent default soft scrolling entirely so it doesn't get stuck between sections
+    // Or if currently animating, prevent the extra wheel ticks from stacking up
+    if (e.cancelable) e.preventDefault();
+    if (isWheelLocked || isClickScrolling) return;
+
+    // Find our current logical position by searching for the active navbar state
+    let currentIndex = Array.from(sections).findIndex(sec => {
+      const activeLink = Array.from(navLinks).find(l => l.classList.contains('active'));
+      return activeLink && sec.id === activeLink.dataset.section;
+    });
+
+    if (currentIndex === -1) currentIndex = 0;
+    let targetIndex = currentIndex;
+    
+    if (e.deltaY > 0) {
+      if (currentIndex < sections.length - 1) targetIndex = currentIndex + 1;
+    } else {
+      if (currentIndex > 0) targetIndex = currentIndex - 1;
+    }
+
+    if (targetIndex !== currentIndex) {
+       isWheelLocked = true;
+       
+       const targetSec = sections[targetIndex];
+       
+       // Handle known strict target areas (like footer offset preservation)
+       if (targetSec.id === 'contact') {
+         window.scrollTo({
+           top: document.documentElement.scrollHeight,
+           behavior: 'smooth'
+         });
+         history.pushState(null, null, '#contact');
+       } else if (targetSec.id === 'home') {
+         window.scrollTo({
+           top: 0,
+           behavior: 'smooth'
+         });
+         history.pushState(null, null, '#home');
+       } else {
+         window.scrollTo({
+           top: targetSec.offsetTop - 72,
+           behavior: 'smooth'
+         });
+         history.pushState(null, null, '#' + targetSec.id);
+       }
+       
+       // Update visual Active Nav instantaneously
+       navLinks.forEach(l => l.classList.remove('active'));
+       const targetLink = Array.from(navLinks).find(l => l.dataset.section === targetSec.id);
+       if (targetLink) targetLink.classList.add('active');
+
+       // Debounce scroll inputs strictly while smooth scroll computes and lands (1000ms is standard for fullpage CSS)
+       setTimeout(() => {
+           isWheelLocked = false;
+           updateActiveSection();
+       }, 1000); 
+    } else {
+       // Debounce edges (bouncing off top or bottom)
+       isWheelLocked = true;
+       setTimeout(() => isWheelLocked = false, 500); 
+    }
+  }, { passive: false });
 
   // Initial trigger
   updateActiveSection();
