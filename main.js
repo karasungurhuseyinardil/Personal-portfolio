@@ -166,31 +166,90 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   );
 })();
 
+
 /* ─── 6. SCROLL SPY ───────────────────────────────────── */
 (function initScrollSpy() {
   const sections = $$('section[id]');
   const navLinks = $$('.nav-link');
   if (!sections.length || !navLinks.length) return;
 
-  window.addEventListener('scroll', () => {
-    let currentContext = 'home';
-    const scrollY = window.scrollY;
+  let isClickScrolling = false;
+  let clickScrollTimeout = null;
+
+  // Exact mathematical active section detection
+  function updateActiveSection() {
+    if (isClickScrolling) return;
+
+    let activeId = null;
+    let maxVisibleHeight = 0;
+    
+    // Viewport minus the fixed navbar (72px)
+    const viewTop = 72;
+    const viewBottom = window.innerHeight;
 
     sections.forEach(sec => {
-      const sectionTop = sec.offsetTop;
-      // Adjust offset (e.g. 150px) based on header height
-      if (scrollY >= sectionTop - 150) {
-        currentContext = sec.getAttribute('id');
+      const rect = sec.getBoundingClientRect();
+      const visibleTop = Math.max(viewTop, rect.top);
+      const visibleBottom = Math.min(viewBottom, rect.bottom);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+      if (visibleHeight > maxVisibleHeight) {
+        maxVisibleHeight = visibleHeight;
+        activeId = sec.getAttribute('id');
       }
     });
 
-    navLinks.forEach(l => {
-      l.classList.toggle('active', l.dataset.section === currentContext);
-    });
+    if (activeId) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.dataset.section === activeId);
+      });
+    }
+  }
+
+  // Use passive scroll listener with RAF for performance
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
+    }
   }, { passive: true });
-  
-  // Trigger once on load
-  window.dispatchEvent(new Event('scroll'));
+
+  // Handle manual clicks to override visual state immediately and prevent flicker
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const sectionId = this.dataset.section;
+
+      // Özel durum: Contact section tıklandığında hem contact hem de footer net görünsün
+      if (sectionId === 'contact') {
+        e.preventDefault();
+        history.pushState(null, null, '#contact');
+        
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+
+      // Set active immediately
+      navLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+
+      // Pause the scroll spy during smooth scroll
+      isClickScrolling = true;
+      clearTimeout(clickScrollTimeout);
+      clickScrollTimeout = setTimeout(() => {
+        isClickScrolling = false;
+        updateActiveSection(); // Final sync
+      }, 800); // 800ms covers CSS smooth scroll duration
+    });
+  });
+
+  // Initial trigger
+  updateActiveSection();
 })();
 
 /* ─── 7. SCROLL REVEAL ────────────────────────────────── */

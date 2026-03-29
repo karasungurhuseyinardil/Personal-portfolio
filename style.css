@@ -70,7 +70,6 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-h) + 40px);
 }
 
 body {
@@ -524,13 +523,18 @@ body:not(:hover) .cursor-ring {
    SECTIONS — COMMON
 ═══════════════════════════════════════════════════════════ */
 .section {
-    padding: var(--section-gap) 0;
+    min-height: calc(100dvh - var(--nav-h));
+    scroll-margin-top: var(--nav-h);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
 }
 
 .section-container {
     max-width: 1280px;
-    margin: 0 auto;
+    margin: auto;
     padding: 0 2rem;
+    width: 100%;
 }
 
 .section-header {
@@ -1017,6 +1021,15 @@ body:not(:hover) .cursor-ring {
 /* ═══════════════════════════════════════════════════════════
    SKILLS
 ═══════════════════════════════════════════════════════════ */
+.skills-section {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.skills-section .section-container {
+    width: 100%;
+}
+
 .skills-tabs {
     display: flex;
     gap: .5rem;
@@ -1305,7 +1318,7 @@ body:not(:hover) .cursor-ring {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
 }
 
@@ -1864,7 +1877,7 @@ body:not(:hover) .cursor-ring {
     }
 
     .projects-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .skill-cards {
@@ -2060,6 +2073,10 @@ body:not(:hover) .cursor-ring {
     }
 
     .volunteer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
         grid-template-columns: 1fr;
     }
 }
