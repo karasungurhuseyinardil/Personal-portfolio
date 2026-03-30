@@ -701,40 +701,13 @@ function startReveal() {
     } catch (_) { /* silent fail — keep static value */ }
   }
 
-  /* --- Project cards: inject ⭐ star counts ---------- */
-  async function fetchProjectStars() {
-    const cards = [...document.querySelectorAll('.project-card[data-repo]')];
-    if (!cards.length) return;
-
-    await Promise.allSettled(cards.map(async card => {
-      const repo = card.dataset.repo;
-      try {
-        const res  = await fetch(`https://api.github.com/repos/${GH_USER}/${repo}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data.stargazers_count === undefined) return;
-        // Inject badge into project-body after the type tag
-        const body = card.querySelector('.project-body');
-        const type = card.querySelector('.project-type');
-        if (!body || !type) return;
-        // Avoid duplicate badges
-        if (body.querySelector('.star-badge')) return;
-        const badge = document.createElement('span');
-        badge.className = 'star-badge';
-        badge.innerHTML = `<i class="fas fa-star"></i> ${data.stargazers_count}`;
-        type.insertAdjacentElement('afterend', badge);
-      } catch (_) { /* silent */ }
-    }));
-  }
-
   // Only fetch when About section enters viewport to save bandwidth
   const aboutSection = document.querySelector('#about');
-  if (!aboutSection) { fetchUserStats(); fetchProjectStars(); return; }
+  if (!aboutSection) { fetchUserStats(); return; }
 
   const once = new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return;
     fetchUserStats();
-    fetchProjectStars();
     once.disconnect();
   }, { threshold: .1 });
   once.observe(aboutSection);
@@ -789,6 +762,9 @@ function showToast(msg, type = 'success') {
       'about.sub':   'A little bit about who I am and what drives me',
       'skills.sub':  'Technologies I use to bring ideas to life',
       'exp.sub':     'My professional journey so far',
+      'certs.tag':   '04 / certifications',
+      'certs.header.title': 'Certifications &amp; <span class="text-gradient">Volunteering</span>',
+      'certs.header.sub': 'Personal Development and Social Responsibility',
       'proj.sub':    "A selection of work I'm proud of",
       'contact.sub': "Have a project or opportunity in mind? I'd love to hear about it.",
       /* about paragraphs (HTML) */
@@ -821,7 +797,7 @@ function showToast(msg, type = 'success') {
       'certs.title': 'Trainings & Certifications',
       'vol.section.title': 'Volunteer <span class="text-gradient">Experience</span>',
       'vol1.title': 'Business Development Leader', 'vol1.org': 'AIESEC in Istanbul Asia',
-      'vol1.desc': 'Led business development initiatives and engaged with AIESEC members to expand partnership networks across Istanbul.',
+      'vol1.desc': 'Led business development initiatives to expand partnership networks.',
       'vol1.date': 'Mar 2023 – Aug 2023',
       'cert1.date': 'Feb 2025 – Jul 2025',
       'cert2.date': 'Jul 2023 – Jan 2024',
@@ -862,6 +838,9 @@ function showToast(msg, type = 'success') {
       'about.sub':   'Kim olduğum ve beni nelerin motive ettiğine dair kısa bir bilgi',
       'skills.sub':  'Fikirleri hayata geçirmek için kullandığım teknolojiler',
       'exp.sub':     'Şimdiye kadarki profesyonel yolculuğum',
+      'certs.tag':   '04 / sertifikalar',
+      'certs.header.title': 'Sertifikalar ve <span class="text-gradient">Gönüllülük</span>',
+      'certs.header.sub': 'Kişisel Gelişim ve Sosyal Sorumluluk',
       'proj.sub':    'Gurur duyduğum işlerden bir seçki',
       'contact.sub': 'Bir proje veya fırsat aklınızda mı? Haberleşmekten mutluluk duyarım.',
       'about.p1': 'Ben <strong>Hüseyin Ardıl Karasungur</strong>, İstanbul Doğuş Üniversitesi Bilgisayar Mühendisliği bölümünde öğrenimimi sürdüren bir Backend & Full Stack Geliştiriciyim (Tam Burs — Haziran 2025 mezuniyeti). Üniversiteye girişte <strong>hem bölümümden hem de fakültemden birincilik</strong> derecesiyle kabul edildim.',
@@ -875,7 +854,7 @@ function showToast(msg, type = 'success') {
       'stat3.lbl': 'Teknik Beceri',       'stat4.lbl': 'Sertifika & Ödül',
       'tab.backend': 'Backend', 'tab.frontend': 'Frontend', 'tab.tools': 'Pratikler & Araçlar',
       'lvl.advanced': 'İleri Seviye', 'lvl.intermediate': 'Orta Seviye',
-      'exp1.role': 'Backend Geliştirici', 'exp1.type': 'Tam Zamanlı · İstanbul, TR', 'exp1.comp': '<i class="fas fa-building"></i> Bilgera Yazılım A.Ş.', 'exp1.date': '<i class="fas fa-calendar"></i> Ağu 2025 – Günümüz',
+      'exp1.role': 'Backend Geliştirici', 'exp1.type': 'Tam Zamanlı · İstanbul, TR', 'exp1.comp': '<i class="fas fa-building"></i> Bilgera Yazılım A.Ş.', 'exp1.date': '<i class="fas fa-calendar"></i> Ağu 2025 – Devam Ediyor',
       'exp1.desc': '<strong>Repzone</strong> platformu için .NET kullanarak backend geliştirme süreçlerinde çalıştım; API geliştirme ve mevcut servislerin iyileştirilmesine odaklandım. Danone projesi için <strong>Ürün Sahibi</strong> rolünü üstlenerek gereksinimlerin tanımlanmasına, süreç takibine ve paydaşlar arası iletişim koordinasyonuna katkıda bulundum.',
       'exp2.role': 'Backend Geliştirici', 'exp2.type': 'Yarı Zamanlı · İstanbul, TR', 'exp2.comp': '<i class="fas fa-building"></i> Turkcell', 'exp2.date': '<i class="fas fa-calendar"></i> Ağu 2024 – Ara 2024',
       'exp2.desc': '<strong>Kurumsal Müşteri İlişkileri Departmanı\'nda</strong> yarı zamanlı backend geliştirici olarak çalıştım. <strong>Java</strong> ve <strong>Spring</strong> kullanarak mevcut kurumsal servislerin bakımına ve geliştirilmesine katkıda bulundum.',
@@ -886,7 +865,7 @@ function showToast(msg, type = 'success') {
       'certs.title': 'Eğitimler & Sertifikalar',
       'vol.section.title': 'Gönüllü <span class="text-gradient">Deneyimi</span>',
       'vol1.title': 'İş Geliştirme Lideri', 'vol1.org': 'AIESEC İstanbul Asya',
-      'vol1.desc': 'İstanbul genelinde ortaklık ağlarını genişletmek için iş geliştirme girişimleri yürüttüm ve AIESEC üyeleriyle iş birliği yaptım.',
+      'vol1.desc': 'Ortaklık ağlarını genişletmek için iş geliştirme girişimleri yürüttüm',
       'vol1.date': 'Mar 2023 – Ağu 2023',
       'cert1.date': 'Şub 2025 – Tem 2025',
       'cert2.date': 'Tem 2023 – Oca 2024',
@@ -917,16 +896,16 @@ function showToast(msg, type = 'success') {
   const MAP = [
     /* section tags */
     ['#aboutTag',   'about.tag',   false], ['#skillsTag',  'skills.tag',   false],
-    ['#expTag',     'exp.tag',     false], ['#projTag',    'proj.tag',     false],
-    ['#contactTag', 'contact.tag', false],
+    ['#expTag',     'exp.tag',     false], ['#certsTag',   'certs.tag',    false],
+    ['#projTag',    'proj.tag',    false], ['#contactTag', 'contact.tag',  false],
     /* section titles (HTML) */
-    ['#aboutTitle',   'about.title',   true], ['#skillsTitle',   'skills.title',  true],
-    ['#expTitle',     'exp.title',     true], ['#projTitle',    'proj.title',    true],
-    ['#contactTitle', 'contact.title', true],
+    ['#aboutTitle',       'about.title',        true], ['#skillsTitle',   'skills.title',  true],
+    ['#expTitle',         'exp.title',          true], ['#certsHeaderTitle','certs.header.title', true],
+    ['#projTitle',        'proj.title',         true], ['#contactTitle',  'contact.title', true],
     /* subtitles */
-    ['#aboutSub',    'about.sub',   false], ['#skillsSub',    'skills.sub',  false],
-    ['#expSub',      'exp.sub',     false], ['#projSub',     'proj.sub',    false],
-    ['#contactSub',  'contact.sub', false],
+    ['#aboutSub',         'about.sub',          false], ['#skillsSub',    'skills.sub',  false],
+    ['#expSub',           'exp.sub',            false], ['#certsHeaderSub','certs.header.sub', false],
+    ['#projSub',          'proj.sub',           false], ['#contactSub',   'contact.sub', false],
     /* about paragraphs */
     ['#about .about-text p:nth-child(1)', 'about.p1', true],
     ['#about .about-text p:nth-child(2)', 'about.p2', true],
@@ -944,13 +923,13 @@ function showToast(msg, type = 'success') {
     /* skills tabs */
     ['#tabBackend', 'tab.backend', false], ['#tabFrontend', 'tab.frontend', false], ['#tabTools', 'tab.tools', false],
     /* experience */
-    ['#exp1 .tl-role', 'exp1.role', false], ['#exp1 .tl-type', 'exp1.type', false], ['#exp1 .tl-desc', 'exp1.desc', true],
+    ['#exp1 .tl-desc', 'exp1.desc', true],
     
-    ['#exp2 .tl-role', 'exp2.role', false], ['#exp2 .tl-type', 'exp2.type', false], ['#exp2 .tl-desc', 'exp2.desc', true],
+    ['#exp2 .tl-desc', 'exp2.desc', true],
 
-    ['#exp3 .tl-role', 'exp3.role', false], ['#exp3 .tl-type', 'exp3.type', false], ['#exp3 .tl-desc', 'exp3.desc', true],
+    ['#exp3 .tl-desc', 'exp3.desc', true],
 
-    ['#exp4 .tl-role', 'exp4.role', false], ['#exp4 .tl-type', 'exp4.type', false], ['#exp4 .tl-desc', 'exp4.desc', true],
+    ['#exp4 .tl-desc', 'exp4.desc', true],
 
     /* certifications / volunteer */
     ['#certsMainTitle',          'certs.title',         false],
@@ -1067,4 +1046,67 @@ function showToast(msg, type = 'success') {
     });
   });
 })();
+
+/* ═══════════════════════════════════════════════════════════
+   EXPERIENCE SECTION CAROUSEL LOGIC
+═══════════════════════════════════════════════════════════ */
+(function initExperienceCarousel() {
+  const track = document.getElementById('expTimelineTrack');
+  const prevBtn = document.getElementById('expPrev');
+  const nextBtn = document.getElementById('expNext');
+  
+  if (!track || !prevBtn || !nextBtn) return;
+
+  let currentIndex = 0;
+  let itemsPerView = window.innerWidth <= 768 ? 1 : 2;
+  const GAP_PX = 24; // 1.5rem defined in style.css
+
+  function updateCarouselConfig() {
+    itemsPerView = window.innerWidth <= 768 ? 1 : 2;
+    const maxIndex = Math.max(0, track.children.length - itemsPerView);
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    const totalItems = track.children.length;
+    const maxIndex = Math.max(0, totalItems - itemsPerView);
+    
+    // Safety bounds
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+    const firstItem = track.children[0];
+    if (firstItem) {
+        const itemWidth = firstItem.getBoundingClientRect().width;
+        // Translate track exact pixels
+        const totalOffset = currentIndex * (itemWidth + GAP_PX);
+        track.style.transform = `translateX(-${totalOffset}px)`;
+    }
+
+    // Toggle button accessibility state
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIndex;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex--;
+    updateCarousel();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    updateCarousel();
+  });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(updateCarouselConfig, 150);
+  });
+
+  // Initial call needed slightly delayed to let CSS mount item widths correctly
+  setTimeout(updateCarouselConfig, 50);
+})();
+
 
