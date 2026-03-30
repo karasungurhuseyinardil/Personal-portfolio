@@ -110,18 +110,41 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   // Hover effect on interactive elements
   const hoverEls = 'a, button, .skill-card, .project-card, .stat-card, .contact-item';
+  const inputEls = 'input, textarea, select, [contenteditable="true"]';
+
   document.addEventListener('mouseover', e => {
-    if (e.target.closest(hoverEls)) {
+    if (e.target.closest(inputEls)) {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    } else if (e.target.closest(hoverEls)) {
       ring.style.width  = '56px';
       ring.style.height = '56px';
       ring.style.borderColor = 'rgba(139,92,246,.8)';
     }
   });
+
   document.addEventListener('mouseout', e => {
-    if (e.target.closest(hoverEls)) {
+    if (e.target.closest(inputEls)) {
+      dot.style.opacity = '';
+      ring.style.opacity = '';
+    } else if (e.target.closest(hoverEls)) {
       ring.style.width  = '36px';
       ring.style.height = '36px';
       ring.style.borderColor = 'rgba(139,92,246,.5)';
+    }
+  });
+
+  document.addEventListener('focusin', e => {
+    if (e.target.closest(inputEls)) {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    }
+  });
+
+  document.addEventListener('focusout', e => {
+    if (e.target.closest(inputEls)) {
+      dot.style.opacity = '';
+      ring.style.opacity = '';
     }
   });
 })();
@@ -768,9 +791,11 @@ function showToast(msg, type = 'success') {
       'proj.sub':    "A selection of work I'm proud of",
       'contact.sub': "Have a project or opportunity in mind? I'd love to hear about it.",
       /* about paragraphs (HTML) */
-      'about.p1': 'I\'m <strong>Hüseyin Ardıl Karasungur</strong>, a Backend &amp; Full Stack Developer currently completing my <strong>B.S. in Computer Engineering</strong> at Doğuş University, Istanbul (Full Scholarship — graduating June 2025). I was ranked <strong>first in both my department and faculty</strong> upon admission.',
-      'about.p2': 'I specialize in building robust <strong>APIs and backend systems</strong> using Java, Spring Boot, and .NET, while also being capable on the frontend with React and JavaScript. I constantly seek to adopt clean architecture principles such as SOLID, OOP, and Design Patterns in every project I work on.',
-      'about.p3': "I'm passionate about software craftsmanship, AI-driven applications, and contributing to meaningful products that reach real users — from cosmetics ingredient analyzers to professional networking platforms.",
+      'about.p1': 'I am <strong>Hüseyin Ardıl Karasungur</strong>, a Full Stack Software Developer and a graduate of Doğuş University, Department of Computer Engineering (Full Scholarship — June 2025). I was admitted with <strong>top rank in both my department and faculty</strong>.',
+
+'about.p2': 'I specialize in developing <strong>APIs and backend systems</strong> using Java, Spring Boot and .NET; and I am also actively working on the frontend with React and JavaScript. In every project, I strive to apply clean architecture principles such as SOLID, OOP and design patterns.',
+
+'about.p3': 'I focus on building meaningful products that are used by real users and create value, particularly in areas such as software development, AI-powered applications and professional networking platforms.',
       /* about meta */
       'about.loc':    'Istanbul, Turkey',
       'about.edu':    'B.S. Computer Engineering — Doğuş University (2020–2025), Full Scholarship',
@@ -786,7 +811,7 @@ function showToast(msg, type = 'success') {
       'lvl.advanced': 'Advanced', 'lvl.intermediate': 'Intermediate',
       /* experience */
       'exp1.role': 'Backend Developer', 'exp1.type': 'Full-time · Istanbul, TR', 'exp1.comp': '<i class="fas fa-building"></i> Bilgera Software A.Ş.', 'exp1.date': '<i class="fas fa-calendar"></i> Aug 2025 – Present', 
-      'exp1.desc': 'Worked on backend development processes for the <strong>Repzone</strong> platform using .NET, focusing on API development and improving existing services. Also took on the <strong>Product Owner</strong> role for the Danone project — contributing to requirement definition, monitoring the development process, and facilitating communication between partners.',
+      'exp1.desc': 'Worked on backend development processes for the <strong>Repzone</strong> platform using .NET, focusing on API development and improving existing services. Also took on the <strong>Product Owner</strong> role for the Danone project — contributing to requirement definition, monitoring the development process and facilitating communication between partners.',
       'exp2.role': 'Backend Developer', 'exp2.type': 'Part-time · Istanbul, TR', 'exp2.comp': '<i class="fas fa-building"></i> Turkcell', 'exp2.date': '<i class="fas fa-calendar"></i> Aug 2024 – Dec 2024',
       'exp2.desc': 'Worked as a part-time backend developer in the <strong>Corporate Customer Relations Department</strong>. Contributed to backend systems using <strong>Java</strong> and <strong>Spring</strong>, helping maintain and extend existing enterprise-grade services.',
       'exp3.role': 'Backend Development Intern', 'exp3.type': 'Internship · Istanbul, TR', 'exp3.comp': '<i class="fas fa-building"></i> Tekhnelogos', 'exp3.date': '<i class="fas fa-calendar"></i> Jun 2024 – Aug 2024',
@@ -810,8 +835,8 @@ function showToast(msg, type = 'success') {
       'vol2.date': 'Nov 2022 – Sep 2023',
       /* projects */
       'proj1.type': 'Mobile · AI',   'proj1.desc': 'Enables barcode scanning and ingredient analysis for cosmetics. Provides AI-driven personalized product recommendations powered by ML Kit.',
-      'proj2.type': 'Full Stack',    'proj2.desc': 'A .NET-based platform for professionals to showcase their networks, supporting authentication, data management, and a fully responsive UI.',
-      'proj3.type': 'Backend',       'proj3.desc': 'Java-based e-commerce system supporting registration, login, product browsing, cart management, checkout flow, and order tracking.',
+      'proj2.type': 'Full Stack',    'proj2.desc': 'A .NET-based platform for professionals to showcase their networks, supporting authentication, data management and a fully responsive UI.',
+      'proj3.type': 'Backend',       'proj3.desc': 'Java-based e-commerce system supporting registration, login, product browsing, cart management, checkout flow and order tracking.',
       'proj4.type': 'Frontend',      'proj4.desc': 'Frontend of a streaming platform built with JavaScript, featuring responsive layout design and smooth media preview UI components.',
       /* contact */
       'contact.h3': 'Get In Touch',
@@ -843,9 +868,9 @@ function showToast(msg, type = 'success') {
       'certs.header.sub': 'Kişisel Gelişim ve Sosyal Sorumluluk',
       'proj.sub':    'Gurur duyduğum işlerden bir seçki',
       'contact.sub': 'Bir proje veya fırsat aklınızda mı? Haberleşmekten mutluluk duyarım.',
-      'about.p1': 'Ben <strong>Hüseyin Ardıl Karasungur</strong>, İstanbul Doğuş Üniversitesi Bilgisayar Mühendisliği bölümünde öğrenimimi sürdüren bir Backend & Full Stack Geliştiriciyim (Tam Burs — Haziran 2025 mezuniyeti). Üniversiteye girişte <strong>hem bölümümden hem de fakültemden birincilik</strong> derecesiyle kabul edildim.',
+      'about.p1': 'Ben <strong>Hüseyin Ardıl Karasungur</strong>, Doğuş Üniversitesi Bilgisayar Mühendisliği bölümünden mezun olmuş bir Full Stack Yazılım Geliştiriciyim (Tam Burs — Haziran 2025 mezuniyeti). Üniversiteye girişte <strong>hem bölümüm hem de fakültemde birincilik</strong> derecesiyle kabul edildim.',
       'about.p2': '<strong>API\'ler ve backend sistemleri</strong> geliştirme konusunda Java, Spring Boot ve .NET ile uzmanlaşıyorum; aynı zamanda React ve JavaScript ile frontend tarafında da etkin çalışabiliyorum. Her projemde SOLID, OOP ve Tasarım Desenleri gibi temiz mimari prensiplerini benimsemeye özen gösteriyorum.',
-      'about.p3': 'Yazılım zanaatına, yapay zeka destekli uygulamalara ve kozmetik içerik analizörlerinden profesyonel ağ platformlarına kadar gerçek kullanıcılara ulaşan anlamlı ürünlere katkı sağlamaya büyük önem veriyorum.',
+      'about.p3': 'Yazılım geliştirme, yapay zeka destekli uygulamalar ve profesyonel ağ platformları gibi alanlarda, gerçek kullanıcılar tarafından kullanılan ve değer üreten ürünler geliştirmeye odaklanıyorum.',
       'about.loc':    'İstanbul, Türkiye',
       'about.edu':    'Bilgisayar Mühendisliği — Doğuş Üniversitesi (2020–2025), Tam Burs',
       'about.status': 'Tam zamanlı fırsatlara açığım',

@@ -354,6 +354,12 @@ body:not(:hover) .cursor-ring {
     opacity: 0;
 }
 
+/* Hide custom cursor when hovering or focusing form elements to prevent visual interference with native caret/selection */
+body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover, select:focus, [contenteditable="true"]:hover, [contenteditable="true"]:focus) .cursor-dot,
+body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover, select:focus, [contenteditable="true"]:hover, [contenteditable="true"]:focus) .cursor-ring {
+    opacity: 0 !important;
+}
+
 @media (pointer:coarse) {
 
     .cursor-dot,
@@ -1199,6 +1205,7 @@ body:not(:hover) .cursor-ring {
     align-items: center;
     gap: 1rem;
 }
+
 .carousel-container {
     overflow: hidden;
     width: 100%;
@@ -1218,6 +1225,7 @@ body:not(:hover) .cursor-ring {
     z-index: 1;
     pointer-events: none;
 }
+
 .carousel-btn {
     background: var(--clr-card);
     border: 1px solid var(--clr-border);
@@ -1233,12 +1241,14 @@ body:not(:hover) .cursor-ring {
     flex-shrink: 0;
     z-index: 10;
 }
+
 .carousel-btn:hover:not(:disabled) {
     border-color: var(--clr-primary);
     color: var(--clr-primary);
     transform: scale(1.05);
     background: rgba(139, 92, 246, 0.05);
 }
+
 .carousel-btn:disabled {
     opacity: 0.3;
     pointer-events: none;
@@ -1507,12 +1517,39 @@ body:not(:hover) .cursor-ring {
 ═══════════════════════════════════════════════════════════ */
 .contact-section {
     background: var(--clr-bg-alt);
+    min-height: auto;
+    padding-top: 3.5rem;
+    padding-bottom: 2.5rem;
+    overflow: visible;
+}
+
+.contact-section .section-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.contact-section .section-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact-section .section-tag {
+    display: inline-block;
+    margin-bottom: 0.85rem;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-section .section-title {
+    margin-bottom: 0;
 }
 
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
-    gap: 4rem;
+    gap: 2.5rem;
     align-items: start;
 }
 
@@ -1579,7 +1616,6 @@ body:not(:hover) .cursor-ring {
     font-weight: 500;
 }
 
-/* Form */
 .contact-form-wrap {
     background: var(--clr-card);
     border: 1px solid var(--clr-border);
@@ -1862,7 +1898,7 @@ body:not(:hover) .cursor-ring {
     .timeline {
         padding-bottom: 2rem;
     }
-    
+
     .timeline::before {
         top: 16px;
         left: 0;
@@ -1872,7 +1908,7 @@ body:not(:hover) .cursor-ring {
         transform: none;
         background: linear-gradient(to right, var(--clr-primary), transparent);
     }
-    
+
     .timeline-item {
         margin-left: 0 !important;
         margin-top: 48px;
@@ -1881,7 +1917,7 @@ body:not(:hover) .cursor-ring {
         flex: 0 0 calc((100% - 1.5rem) / 2);
         align-self: stretch !important;
     }
-    
+
     .timeline-dot {
         top: -39px;
         left: 50% !important;
@@ -1898,7 +1934,7 @@ body:not(:hover) .cursor-ring {
     :root {
         --section-gap: 4rem;
     }
-    
+
     .timeline-item {
         /* Mobile: 1 card strictly */
         flex: 0 0 100%;
@@ -2053,11 +2089,24 @@ body:not(:hover) .cursor-ring {
 /* ═══════════════════════════════════════════════════════════
    CERTIFICATIONS
 ═══════════════════════════════════════════════════════════ */
+.certifications-section {
+    padding-bottom: 6rem;
+    overflow: visible;
+}
+
+.certifications-section .section-header {
+    margin-bottom: 1.5rem;
+}
+
+.certifications-section .section-sub:empty {
+    display: none;
+}
+
 .certs-title {
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .certs-title::after {
