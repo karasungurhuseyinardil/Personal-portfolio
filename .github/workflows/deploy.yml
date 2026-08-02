@@ -40,19 +40,35 @@ jobs:
           TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
           RECEIVER:    ${{ secrets.EMAILJS_RECEIVER_EMAIL }}
         run: |
-          if [ -z "$PUBLIC_KEY" ]; then
+          # Secret değerlerine yapıştırma sırasında satır sonu / boşluk karışabiliyor;
+          # temizlemeden yazarsak config.js syntax error veriyor ve site sessizce bozuluyor.
+          esc() {
+            printf '%s' "$1" \
+              | tr -d '\r\n' \
+              | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' \
+                    -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+          }
+
+          if [ -z "$(esc "$PUBLIC_KEY")" ]; then
             echo "::error::EMAILJS_PUBLIC_KEY secret'ı tanımlı değil — iletişim formu çalışmaz."
             exit 1
           fi
+
           cat > config.js <<EOF
           window.PORTFOLIO_CONFIG = {
-            EMAILJS_PUBLIC_KEY:     "${PUBLIC_KEY}",
-            EMAILJS_SERVICE_ID:     "${SERVICE_ID}",
-            EMAILJS_TEMPLATE_ID:    "${TEMPLATE_ID}",
-            EMAILJS_RECEIVER_EMAIL: "${RECEIVER:-ardilkarasungur12@gmail.com}"
+            EMAILJS_PUBLIC_KEY:     "$(esc "$PUBLIC_KEY")",
+            EMAILJS_SERVICE_ID:     "$(esc "$SERVICE_ID")",
+            EMAILJS_TEMPLATE_ID:    "$(esc "$TEMPLATE_ID")",
+            EMAILJS_RECEIVER_EMAIL: "$(esc "${RECEIVER:-ardilkarasungur12@gmail.com}")"
           };
           EOF
-          echo "config.js oluşturuldu (service: ${SERVICE_ID})"
+
+          # Bozuk dosyayı yayınlamaktansa deploy'u burada durdur
+          node --check config.js || {
+            echo "::error::Üretilen config.js geçerli JavaScript değil."
+            exit 1
+          }
+          echo "config.js doğrulandı (service: $(esc "$SERVICE_ID"))"
 
       # 4. Upload the entire repo root as the Pages artifact
       #    (no build step needed — it's a plain HTML/CSS/JS site)
