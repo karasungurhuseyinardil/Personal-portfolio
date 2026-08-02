@@ -239,6 +239,9 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Dar ekranda içerik kenara yapışmasın; taşan bir öğe flex ile
+       ortalanınca sol tarafı kırpılıp sağa kaymış gibi görünüyordu */
+    padding: 1.25rem;
     transition: opacity .6s ease, visibility .6s ease;
 }
 
@@ -250,12 +253,14 @@ textarea {
 
 .loader-content {
     text-align: center;
+    width: 100%;
+    max-width: 26rem;
 }
 
 .loader-logo {
-    font-size: 2.5rem;
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
     font-weight: 800;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1.25rem, 5vw, 2rem);
 }
 
 .logo-bracket {
@@ -271,24 +276,23 @@ textarea {
 
 .loader-code {
     font-family: var(--font-code);
-    font-size: .9rem;
+    /* En uzun satır ('Hüseyin Ardıl Karasungur') 360px'lik ekrana da sığsın */
+    font-size: clamp(.68rem, 3vw, .9rem);
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1.25rem, 5vw, 2rem);
     background: var(--clr-card);
     border: 1px solid var(--clr-border);
     border-radius: var(--radius);
-    padding: 1.2rem 1.5rem;
-    min-width: 260px;
+    padding: clamp(.9rem, 3.5vw, 1.2rem) clamp(1rem, 4vw, 1.5rem);
+    min-width: min(260px, 100%);
+    max-width: 100%;
 }
 
 .code-line {
     opacity: 0;
     animation: fadeInUp .4s ease forwards var(--d, 0s);
     line-height: 2;
-}
-
-.kw {
-    color: #c084fc;
+    white-space: nowrap;
 }
 
 .str {
