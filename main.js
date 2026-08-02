@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    PORTFOLIO — main.js
-   All logic: loader, cursor, nav, scroll spy, animations,
+   All logic: cursor, nav, scroll spy, animations,
    skills tabs, project filter, contact form, theme toggle.
 ═══════════════════════════════════════════════════════════ */
 'use strict';
@@ -9,30 +9,15 @@
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-/* ─── 1. LOADER ───────────────────────────────────────── */
-(function initLoader() {
-  const loader  = $('#loader');
-  const bar     = $('#loaderBar');
-  const percent = $('#loaderPercent');
-  if (!loader) return;
-
-  let p = 0;
-  const tick = setInterval(() => {
-    p += Math.random() * 18 + 4;
-    if (p >= 100) {
-      p = 100;
-      clearInterval(tick);
-      bar.style.width = '100%';
-      percent.textContent = '100%';
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        startReveal();
-      }, 450);
-    }
-    bar.style.width = p + '%';
-    percent.textContent = Math.floor(p) + '%';
-  }, 120);
-})();
+/* ─── 1. GİRİŞ ANİMASYONLARINI BAŞLAT ─────────────────── */
+/* Eskiden burada sahte yüzdeli bir açılış ekranı vardı; gerçek yükleme
+   durumunu ölçmediği için içeriği 1,5-3 sn geciktiriyor ve LCP'yi bozuyordu.
+   Artık içerik anında görünüyor, reveal gözlemcisi doğrudan başlıyor. */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startReveal, { once: true });
+} else {
+  startReveal();
+}
 
 /* ─── 2. HERO CANVAS PARTICLES ───────────────────────── */
 (function initCanvas() {

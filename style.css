@@ -95,8 +95,7 @@ body {
 }
 
 /* Override for elements that need faster/no inherited transition */
-.skill-bar,
-.loader-progress-bar {
+.skill-bar {
     transition: width 1s cubic-bezier(.4, 0, .2, 1) !important;
 }
 
@@ -229,40 +228,8 @@ textarea {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   LOADING SCREEN
+   MARKA (üst bar + footer)
 ═══════════════════════════════════════════════════════════ */
-.loader-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    background: var(--clr-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Dar ekranda içerik kenara yapışmasın; taşan bir öğe flex ile
-       ortalanınca sol tarafı kırpılıp sağa kaymış gibi görünüyordu */
-    padding: 1.25rem;
-    transition: opacity .6s ease, visibility .6s ease;
-}
-
-.loader-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.loader-content {
-    text-align: center;
-    width: 100%;
-    max-width: 26rem;
-}
-
-.loader-logo {
-    font-size: clamp(1.9rem, 8vw, 2.5rem);
-    font-weight: 800;
-    margin-bottom: clamp(1.25rem, 5vw, 2rem);
-}
-
 .logo-bracket {
     color: var(--clr-accent);
 }
@@ -272,57 +239,6 @@ textarea {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-}
-
-.loader-code {
-    font-family: var(--font-code);
-    /* En uzun satır ('Hüseyin Ardıl Karasungur') 360px'lik ekrana da sığsın */
-    font-size: clamp(.68rem, 3vw, .9rem);
-    text-align: left;
-    margin-bottom: clamp(1.25rem, 5vw, 2rem);
-    background: var(--clr-card);
-    border: 1px solid var(--clr-border);
-    border-radius: var(--radius);
-    padding: clamp(.9rem, 3.5vw, 1.2rem) clamp(1rem, 4vw, 1.5rem);
-    min-width: min(260px, 100%);
-    max-width: 100%;
-}
-
-.code-line {
-    opacity: 0;
-    animation: fadeInUp .4s ease forwards var(--d, 0s);
-    line-height: 2;
-    white-space: nowrap;
-}
-
-.str {
-    color: #86efac;
-}
-
-.br {
-    color: #fbbf24;
-}
-
-.loader-progress-wrap {
-    height: 3px;
-    background: var(--clr-card);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: .6rem;
-}
-
-.loader-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--grad-main);
-    border-radius: 2px;
-    transition: width .15s ease;
-}
-
-.loader-percent {
-    font-family: var(--font-code);
-    font-size: .8rem;
-    color: var(--clr-txt-2);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -585,23 +501,25 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
 /* ═══════════════════════════════════════════════════════════
    SCROLL ANIMATIONS
 ═══════════════════════════════════════════════════════════ */
-.reveal-up,
-.reveal-left,
-.reveal-right {
+/* Varsayılan: içerik görünür. Gizleme yalnızca JS etkinken (html.js) uygulanır,
+   böylece JS çalışmadığında sayfa boş kalmaz. */
+.js .reveal-up,
+.js .reveal-left,
+.js .reveal-right {
     opacity: 0;
     transition: opacity .7s ease, transform .7s ease;
     transition-delay: var(--rd, 0s);
 }
 
-.reveal-up {
+.js .reveal-up {
     transform: translateY(40px);
 }
 
-.reveal-left {
+.js .reveal-left {
     transform: translateX(-50px);
 }
 
-.reveal-right {
+.js .reveal-right {
     transform: translateX(50px);
 }
 

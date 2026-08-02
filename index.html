@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Giriş animasyonları yalnızca JS varsa devreye girsin. Bu satır olmadan
+         .reveal-* blokları opacity:0 kalır; JS çalışmayan tarayıcıda ve JS
+         render'ı zayıf arama motorlarında sayfa boş görünür. -->
+    <script>document.documentElement.classList.add('js')</script>
     <meta name="description"
         content="Hüseyin Ardıl Karasungur — Backend & Full Stack Developer skilled in Java, .NET and React.">
     <link rel="icon" type="image/svg+xml"
@@ -140,30 +144,6 @@
 
 <body data-theme="dark">
     <div class="scroll-progress" id="scrollProgress"></div>
-
-    <!-- ═══════════════════════════════ LOADER ═══════════════════════════════ -->
-    <div class="loader-screen" id="loader">
-        <div class="loader-content">
-            <div class="loader-logo">
-                <span class="logo-bracket">&lt;</span>
-                <span class="logo-text">HAK</span>
-                <span class="logo-bracket">/&gt;</span>
-            </div>
-            <div class="loader-code">
-                <div class="code-line" style="--d:0s">developer = <span class="br">{</span></div>
-                <div class="code-line" style="--d:.15s">&nbsp;&nbsp;name: <span class="str">'Hüseyin Ardıl
-                        Karasungur'</span>,
-                </div>
-                <div class="code-line" style="--d:.3s">&nbsp;&nbsp;role: <span class="str">'Software Developer'</span>,
-                </div>
-                <div class="code-line" style="--d:.45s"><span class="br">}</span>;</div>
-            </div>
-            <div class="loader-progress-wrap">
-                <div class="loader-progress-bar" id="loaderBar"></div>
-            </div>
-            <div class="loader-percent" id="loaderPercent">0%</div>
-        </div>
-    </div>
 
     <!-- ═══════════════════════════════ CURSOR ═══════════════════════════════ -->
     <div class="cursor-dot" id="cursorDot"></div>
