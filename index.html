@@ -95,33 +95,47 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <!-- Yazı tipleri kendi domainimizde (style.css içindeki @font-face).
+         Gövde yazısı ilk boyanan içerik olduğu için öne çekiliyor. -->
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="print.css" media="print">
     <!-- Local Configuration -->
     <script src="config.js"></script>
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS SDK — her ziyarette değil, yalnızca iletişim formuna
+         dokunulduğunda yükleniyor. window.loadEmailJS() bir Promise döndürür
+         ve tekrar çağrılsa bile SDK'yı bir kez indirir. -->
     <script>
-        (function () {
-            var cfg = window.PORTFOLIO_CONFIG || {};
-            if (!cfg.EMAILJS_PUBLIC_KEY) {
-                console.error('[EmailJS] EMAILJS_PUBLIC_KEY bulunamadı. config.js dosyasını kontrol edin.');
-                return;
-            }
-            if (!cfg.EMAILJS_SERVICE_ID || cfg.EMAILJS_SERVICE_ID === 'service_default') {
-                console.warn('[EmailJS] EMAILJS_SERVICE_ID eksik veya varsayılan değerde. config.js dosyasını güncelleyin.');
-            }
-            try {
-                emailjs.init({ publicKey: cfg.EMAILJS_PUBLIC_KEY });
-                console.log('[EmailJS] SDK başarıyla başlatıldı. Service:', cfg.EMAILJS_SERVICE_ID);
-            } catch (e) {
-                console.error('[EmailJS] init() hatası:', e);
-            }
+        window.loadEmailJS = (function () {
+            var pending = null;
+            return function () {
+                if (pending) return pending;
+                pending = new Promise(function (resolve, reject) {
+                    var cfg = window.PORTFOLIO_CONFIG || {};
+                    if (!cfg.EMAILJS_PUBLIC_KEY) {
+                        console.error('[EmailJS] EMAILJS_PUBLIC_KEY bulunamadı. config.js dosyasını kontrol edin.');
+                        return reject(new Error('missing public key'));
+                    }
+                    if (!cfg.EMAILJS_SERVICE_ID || cfg.EMAILJS_SERVICE_ID === 'service_default') {
+                        console.warn('[EmailJS] EMAILJS_SERVICE_ID eksik veya varsayılan değerde.');
+                    }
+                    var s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+                    s.onload = function () {
+                        try {
+                            emailjs.init({ publicKey: cfg.EMAILJS_PUBLIC_KEY });
+                            resolve();
+                        } catch (e) {
+                            console.error('[EmailJS] init() hatası:', e);
+                            reject(e);
+                        }
+                    };
+                    s.onerror = function () { reject(new Error('SDK yüklenemedi')); };
+                    document.head.appendChild(s);
+                });
+                return pending;
+            };
         })();
     </script>
     <!-- Scroll progress bar -->

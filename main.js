@@ -527,6 +527,15 @@ function startReveal() {
   const MAX_PER_DAY = 5;
   const loadedAt = Date.now();
 
+  /* EmailJS SDK'sı sayfa açılışında değil, forma ilk dokunuşta iniyor.
+     Böylece formu kullanmayan ziyaretçi bu isteği hiç yapmıyor. */
+  function ensureEmailJS() {
+    return window.loadEmailJS
+      ? window.loadEmailJS()
+      : Promise.reject(new Error('EmailJS yükleyicisi bulunamadı'));
+  }
+  form.addEventListener('focusin', () => { ensureEmailJS().catch(() => { }); }, { once: true });
+
   function recentSends() {
     let list = [];
     try { list = JSON.parse(localStorage.getItem(SENDS_KEY)) || []; } catch (e) { }
@@ -607,13 +616,6 @@ function startReveal() {
 
     // --- EMAILJS INTEGRATION ---
     // Bu değerler config.js dosyasından (GİTHUBA EKLENMEZ) alınır.
-    if (typeof emailjs === 'undefined') {
-      console.error('EmailJS SDK not loaded!');
-      showToast(isTr ? 'Email servisi yüklenemedi, lütfen sayfayı yenileyin.' : 'Email service not loaded, please refresh.', 'error');
-      submitBtn.disabled = false;
-      return;
-    }
-
     const config = window.PORTFOLIO_CONFIG || {};
     const SERVICE_ID  = config.EMAILJS_SERVICE_ID || 'service_default'; 
     const TEMPLATE_ID = config.EMAILJS_TEMPLATE_ID || 'template_oti8y65'; 
@@ -632,8 +634,10 @@ function startReveal() {
 
     console.log('EmailJS gönderiliyor...', { SERVICE_ID, TEMPLATE_ID, templateParams });
 
+    // SDK forma odaklanınca yüklenmeye başlamış olur; burada hazır olmasını bekliyoruz.
     // EmailJS v4: init() ile public key zaten ayarlandı, send() sadece 3 parametre alır
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+    ensureEmailJS()
+      .then(() => emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams))
       .then((response) => {
         console.log('EmailJS SUCCESS!', response.status, response.text);
         recordSend();
