@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://karasungurhuseyinardil.github.io/sitemap.xml
+Sitemap: https://ardilkarasungur.com/sitemap.xml
