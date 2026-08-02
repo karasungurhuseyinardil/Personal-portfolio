@@ -31,14 +31,37 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 3. Upload the entire repo root as the Pages artifact
+      # 3. Generate config.js from repository secrets
+      #    (config.js is gitignored — it never lives in the repo)
+      - name: Generate config.js
+        env:
+          PUBLIC_KEY:  ${{ secrets.EMAILJS_PUBLIC_KEY }}
+          SERVICE_ID:  ${{ secrets.EMAILJS_SERVICE_ID }}
+          TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
+          RECEIVER:    ${{ secrets.EMAILJS_RECEIVER_EMAIL }}
+        run: |
+          if [ -z "$PUBLIC_KEY" ]; then
+            echo "::error::EMAILJS_PUBLIC_KEY secret'ı tanımlı değil — iletişim formu çalışmaz."
+            exit 1
+          fi
+          cat > config.js <<EOF
+          window.PORTFOLIO_CONFIG = {
+            EMAILJS_PUBLIC_KEY:     "${PUBLIC_KEY}",
+            EMAILJS_SERVICE_ID:     "${SERVICE_ID}",
+            EMAILJS_TEMPLATE_ID:    "${TEMPLATE_ID}",
+            EMAILJS_RECEIVER_EMAIL: "${RECEIVER:-ardilkarasungur12@gmail.com}"
+          };
+          EOF
+          echo "config.js oluşturuldu (service: ${SERVICE_ID})"
+
+      # 4. Upload the entire repo root as the Pages artifact
       #    (no build step needed — it's a plain HTML/CSS/JS site)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
 
-      # 4. Deploy to GitHub Pages
+      # 5. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id:   deployment
         uses: actions/deploy-pages@v4
