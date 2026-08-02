@@ -228,6 +228,32 @@ textarea {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   İKONLAR — icons.svg sprite
+   Font Awesome'ın yerini aldı: dış origin, render engelleyen CSS ve
+   ~100 KB webfont yerine kendi domainimizden tek bir SVG dosyası.
+═══════════════════════════════════════════════════════════ */
+.ic {
+    width: 1em;
+    height: 1em;
+    /* Yazıyla aynı hizada dursun (FA'nın <i> davranışına denk) */
+    vertical-align: -.125em;
+    fill: currentColor;
+    flex-shrink: 0;
+    /* Tema geçişindeki genel transition kuralı buraya sızmasın */
+    transition: none;
+}
+
+.ic-spin {
+    animation: ic-spin 1s linear infinite;
+}
+
+@keyframes ic-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
    MARKA (üst bar + footer)
 ═══════════════════════════════════════════════════════════ */
 .logo-bracket {
@@ -354,7 +380,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     position: relative;
 }
 
-.nav-link i {
+.nav-link .ic {
     font-size: .8rem;
 }
 
@@ -768,7 +794,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     z-index: 2;
 }
 
-.profile-badge i {
+.profile-badge .ic {
     font-size: 1rem;
 }
 
@@ -876,7 +902,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     font-size: .95rem;
 }
 
-.meta-item i {
+.meta-item .ic {
     color: var(--clr-primary);
     width: 16px;
     text-align: center;
@@ -1219,7 +1245,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     gap: .4rem;
 }
 
-.tl-company i {
+.tl-company .ic {
     color: var(--clr-primary);
 }
 
@@ -2025,7 +2051,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     gap: .35rem;
 }
 
-.vol-date i {
+.vol-date .ic {
     color: var(--clr-primary);
 }
 
@@ -2216,7 +2242,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     margin-left: auto;
 }
 
-.star-badge i {
+.star-badge .ic {
     font-size: .7rem;
 }
 
@@ -2300,7 +2326,7 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     transform: translateX(0);
 }
 
-.toast i {
+.toast .ic {
     font-size: 1.1rem;
     flex-shrink: 0;
 }
