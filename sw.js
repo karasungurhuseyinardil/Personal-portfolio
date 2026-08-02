@@ -3,7 +3,7 @@
    Caches all core assets for offline use.
    Strategy: Cache-First for static assets, Network-First for HTML.
 ═══════════════════════════════════════════════════════════ */
-const CACHE_NAME = 'hak-portfolio-v6';
+const CACHE_NAME = 'hak-portfolio-v7';
 
 const STATIC_ASSETS = [
   '/',
@@ -56,16 +56,21 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Cache-first for everything else
+  // Stale-while-revalidate for everything else.
+  // Cache-first idi: CACHE_NAME her deploy'da değişmediği için siteyi bir kez
+  // ziyaret etmiş kullanıcılara yeni CSS/JS hiç ulaşmıyordu. Artık önbellekteki
+  // sürüm anında gösteriliyor, arka planda tazeleniyor; sonraki açılışta güncel.
   event.respondWith(
     caches.match(request).then(cached => {
-      if (cached) return cached;
-      return fetch(request).then(res => {
-        if (!res || res.status !== 200) return res;
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then(c => c.put(request, clone));
+      const fresh = fetch(request).then(res => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put(request, clone));
+        }
         return res;
-      });
+      }).catch(() => cached);
+
+      return cached || fresh;
     })
   );
 });

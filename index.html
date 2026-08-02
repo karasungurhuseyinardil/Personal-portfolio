@@ -16,13 +16,23 @@
     <meta property="og:title" content="Hüseyin Ardıl Karasungur — Developer Portfolio">
     <meta property="og:description"
         content="Backend & Full Stack Developer skilled in Java, .NET and React. Open to new opportunities.">
-    <meta property="og:image" content="og-preview.png">
+    <!-- Önizleme görselleri mutlak URL olmalı; WhatsApp/LinkedIn gibi kazıyıcılar
+         göreli yolu çözemiyor ve önizleme boş çıkıyor. -->
+    <meta property="og:image" content="https://ardilkarasungur.com/og-preview.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Hüseyin Ardıl Karasungur — Backend & Full Stack Developer">
     <meta property="og:url" content="https://ardilkarasungur.com/">
+    <meta property="og:site_name" content="Hüseyin Ardıl Karasungur">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="tr_TR">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hüseyin Ardıl Karasungur — Developer Portfolio">
     <meta name="twitter:description" content="Backend & Full Stack Developer skilled in Java, .NET and React.">
-    <meta name="twitter:image" content="og-preview.png">
+    <meta name="twitter:image" content="https://ardilkarasungur.com/og-preview.png">
+    <meta name="twitter:image:alt" content="Hüseyin Ardıl Karasungur — Backend & Full Stack Developer">
     <link rel="canonical" href="https://ardilkarasungur.com/">
     <meta name="author" content="Hüseyin Ardıl Karasungur">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -46,6 +56,7 @@
           "givenName": "Hüseyin Ardıl",
           "familyName": "Karasungur",
           "url": "https://ardilkarasungur.com/",
+          "image": "https://ardilkarasungur.com/og-preview.png",
           "jobTitle": "Backend & Full Stack Developer",
           "description": "Java, Spring Boot, .NET ve React ile API ve backend sistemleri geliştiren yazılım geliştirici.",
           "nationality": "TR",
@@ -1032,6 +1043,12 @@
                                 <label for="formMessage">Message</label>
                                 <textarea id="formMessage" name="message" rows="5" placeholder="Tell me more…"
                                     required></textarea>
+                            </div>
+                            <!-- Honeypot: ekranda görünmez, klavyeyle ulaşılmaz, ekran
+                                 okuyucudan gizli. Yalnızca botlar doldurur. -->
+                            <div class="hp-field" aria-hidden="true">
+                                <label for="formWebsite">Website</label>
+                                <input type="text" id="formWebsite" name="website" tabindex="-1" autocomplete="off">
                             </div>
                             <button type="submit" class="btn btn-primary btn-full" id="formSubmitBtn">
                                 <span>Send Message</span>

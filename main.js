@@ -532,8 +532,61 @@ function startReveal() {
   const submitBtn = $('#formSubmitBtn');
   if (!form) return;
 
+  /* --- SPAM KORUMASI ---
+     EmailJS ücretsiz planında aylık 200 istek var ve domain kısıtı ücretli.
+     Public key sitede görünür olduğu için kotayı koruyan tek katman burası. */
+  const HONEYPOT   = $('#formWebsite');
+  const SENDS_KEY  = 'pf-sends';
+  const MIN_FILL_MS = 3000;      // 3 sn'den hızlı gönderim insan değil
+  const MIN_GAP_MS  = 60 * 1000; // iki mesaj arası en az 1 dk
+  const MAX_PER_DAY = 5;
+  const loadedAt = Date.now();
+
+  function recentSends() {
+    let list = [];
+    try { list = JSON.parse(localStorage.getItem(SENDS_KEY)) || []; } catch (e) { }
+    const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    return list.filter(t => typeof t === 'number' && t > dayAgo);
+  }
+
+  function recordSend() {
+    const list = recentSends();
+    list.push(Date.now());
+    try { localStorage.setItem(SENDS_KEY, JSON.stringify(list)); } catch (e) { }
+  }
+
   form.addEventListener('submit', e => {
     e.preventDefault();
+
+    const isTrGuard = document.documentElement.lang === 'tr';
+
+    // 1) Honeypot dolduysa bot: hata gösterme, sessizce yut
+    if (HONEYPOT && HONEYPOT.value.trim()) {
+      showToast(isTrGuard ? 'Mesaj gönderildi! En kısa sürede döneceğim.'
+                          : "Message sent! I'll get back to you soon.", 'success');
+      form.reset();
+      return;
+    }
+
+    // 2) Sayfa açılır açılmaz gönderim: otomasyon
+    if (Date.now() - loadedAt < MIN_FILL_MS) {
+      showToast(isTrGuard ? 'Biraz yavaş, formu doldurmayı tamamlayın.'
+                          : 'Slow down — please finish filling the form.', 'error');
+      return;
+    }
+
+    // 3) Gönderim sıklığı
+    const sends = recentSends();
+    if (sends.length >= MAX_PER_DAY) {
+      showToast(isTrGuard ? 'Günlük mesaj sınırına ulaştınız. Doğrudan e-posta gönderebilirsiniz.'
+                          : 'Daily message limit reached. Please email me directly.', 'error');
+      return;
+    }
+    if (sends.length && Date.now() - sends[sends.length - 1] < MIN_GAP_MS) {
+      showToast(isTrGuard ? 'Az önce mesaj gönderdiniz, lütfen bir dakika bekleyin.'
+                          : 'You just sent a message — please wait a minute.', 'error');
+      return;
+    }
 
     // Fields
     const name    = $('#formName');
@@ -598,6 +651,7 @@ function startReveal() {
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
       .then((response) => {
         console.log('EmailJS SUCCESS!', response.status, response.text);
+        recordSend();
         showToast(isTr ? 'Mesaj gönderildi! En kısa sürede döneceğim.' : "Message sent! I'll get back to you soon.", 'success');
         form.reset();
       })

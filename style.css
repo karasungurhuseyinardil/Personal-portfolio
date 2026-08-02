@@ -1623,6 +1623,19 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     margin-bottom: 1.25rem;
 }
 
+/* Honeypot — görünür alan değil; display:none yerine ekran dışına alınıyor,
+   çünkü botların bir kısmı display:none alanları atlıyor. */
+.hp-field {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
 .form-group label {
     display: block;
     font-size: .85rem;
