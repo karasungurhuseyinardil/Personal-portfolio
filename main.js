@@ -611,7 +611,7 @@ function startReveal() {
     }
 
     const isTr = document.documentElement.lang === 'tr';
-    submitBtn.innerHTML = `<svg class="ic ic-spin" aria-hidden="true"><use href="icons.svg#spinner"></use></svg> ${isTr ? 'Gönderiliyor...' : 'Sending...'}`;
+    submitBtn.innerHTML = `<svg class="ic ic-spin" aria-hidden="true"><use href="#spinner"></use></svg> ${isTr ? 'Gönderiliyor...' : 'Sending...'}`;
     submitBtn.disabled = true;
 
     // --- EMAILJS INTEGRATION ---
@@ -660,7 +660,7 @@ function startReveal() {
       })
       .finally(() => {
         const btnText = isTr ? 'Mesaj Gönder' : 'Send Message';
-        submitBtn.innerHTML = `<span>${btnText}</span><svg class="ic" aria-hidden="true"><use href="icons.svg#paper-plane"></use></svg>`;
+        submitBtn.innerHTML = `<span>${btnText}</span><svg class="ic" aria-hidden="true"><use href="#paper-plane"></use></svg>`;
         submitBtn.disabled = false;
       });
   });
@@ -684,8 +684,8 @@ function startReveal() {
   function applyTheme(theme) {
     body.dataset.theme = theme;
     btn.innerHTML = theme === 'dark'
-      ? '<svg class="ic" aria-hidden="true"><use href="icons.svg#sun"></use></svg>'
-      : '<svg class="ic" aria-hidden="true"><use href="icons.svg#moon"></use></svg>';
+      ? '<svg class="ic" aria-hidden="true"><use href="#sun"></use></svg>'
+      : '<svg class="ic" aria-hidden="true"><use href="#moon"></use></svg>';
     btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
   }
 })();
@@ -792,7 +792,7 @@ function showToast(msg, type = 'success') {
   const toast = document.createElement('div');
   const icon  = type === 'success' ? 'circle-check' : type === 'error' ? 'circle-xmark' : 'circle-info';
   toast.className = `toast toast-${type}`;
-  toast.innerHTML = `<svg class="ic" aria-hidden="true"><use href="icons.svg#${icon}"></use></svg><span>${msg}</span>`;
+  toast.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#${icon}"></use></svg><span>${msg}</span>`;
   container.appendChild(toast);
   requestAnimationFrame(() => toast.classList.add('toast-show'));
   setTimeout(() => {
@@ -853,13 +853,13 @@ function showToast(msg, type = 'success') {
       /* skill levels */
       'lvl.advanced': 'Advanced', 'lvl.intermediate': 'Intermediate',
       /* experience */
-      'exp1.role': 'Backend Developer', 'exp1.type': 'Full-time · Istanbul, TR', 'exp1.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Bilgera Software A.Ş.', 'exp1.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Aug 2025 – Present', 
+      'exp1.role': 'Backend Developer', 'exp1.type': 'Full-time · Istanbul, TR', 'exp1.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Bilgera Software A.Ş.', 'exp1.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Aug 2025 – Present', 
       'exp1.desc': 'Worked on backend development processes for the <strong>Repzone</strong> platform using .NET, focusing on API development and improving existing services. Also took on the <strong>Product Owner</strong> role for the Danone project — contributing to requirement definition, monitoring the development process and facilitating communication between partners.',
-      'exp2.role': 'Backend Developer', 'exp2.type': 'Part-time · Istanbul, TR', 'exp2.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Turkcell', 'exp2.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Aug 2024 – Dec 2024',
+      'exp2.role': 'Backend Developer', 'exp2.type': 'Part-time · Istanbul, TR', 'exp2.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Turkcell', 'exp2.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Aug 2024 – Dec 2024',
       'exp2.desc': 'Worked as a part-time backend developer in the <strong>Corporate Customer Relations Department</strong>. Contributed to backend systems using <strong>Java</strong> and <strong>Spring</strong>, helping maintain and extend existing enterprise-grade services.',
-      'exp3.role': 'Backend Development Intern', 'exp3.type': 'Internship · Istanbul, TR', 'exp3.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Tekhnelogos', 'exp3.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Jun 2024 – Aug 2024',
+      'exp3.role': 'Backend Development Intern', 'exp3.type': 'Internship · Istanbul, TR', 'exp3.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Tekhnelogos', 'exp3.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Jun 2024 – Aug 2024',
       'exp3.desc': 'Developed an <strong>OKR (Objectives and Key Results)</strong> tracking system using .NET, enabling internal goal monitoring and reporting across teams.',
-      'exp4.role': 'Mobile App Development Intern', 'exp4.type': 'Internship · Istanbul, TR', 'exp4.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Kafein Technology Solutions', 'exp4.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Jul 2022 – Aug 2022',
+      'exp4.role': 'Mobile App Development Intern', 'exp4.type': 'Internship · Istanbul, TR', 'exp4.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Kafein Technology Solutions', 'exp4.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Jul 2022 – Aug 2022',
       'exp4.desc': 'Developed a <strong>weather application</strong> using Java and Android Studio, integrating real-time API data and modern UI components.',
       /* certifications / volunteer */
       'certs.title': 'Trainings & Certifications',
@@ -922,13 +922,13 @@ function showToast(msg, type = 'success') {
       'stat3.lbl': 'Teknik Beceri',       'stat4.lbl': 'Sertifika & Ödül',
       'tab.backend': 'Backend', 'tab.frontend': 'Frontend', 'tab.tools': 'Pratikler & Araçlar',
       'lvl.advanced': 'İleri Seviye', 'lvl.intermediate': 'Orta Seviye',
-      'exp1.role': 'Backend Geliştirici', 'exp1.type': 'Tam Zamanlı · İstanbul, TR', 'exp1.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Bilgera Yazılım A.Ş.', 'exp1.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Ağu 2025 – Devam Ediyor',
+      'exp1.role': 'Backend Geliştirici', 'exp1.type': 'Tam Zamanlı · İstanbul, TR', 'exp1.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Bilgera Yazılım A.Ş.', 'exp1.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Ağu 2025 – Devam Ediyor',
       'exp1.desc': '<strong>Repzone</strong> platformu için .NET kullanarak backend geliştirme süreçlerinde çalıştım; API geliştirme ve mevcut servislerin iyileştirilmesine odaklandım. Danone projesi için <strong>Ürün Sahibi</strong> rolünü üstlenerek gereksinimlerin tanımlanmasına, süreç takibine ve paydaşlar arası iletişim koordinasyonuna katkıda bulundum.',
-      'exp2.role': 'Backend Geliştirici', 'exp2.type': 'Yarı Zamanlı · İstanbul, TR', 'exp2.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Turkcell', 'exp2.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Ağu 2024 – Ara 2024',
+      'exp2.role': 'Backend Geliştirici', 'exp2.type': 'Yarı Zamanlı · İstanbul, TR', 'exp2.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Turkcell', 'exp2.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Ağu 2024 – Ara 2024',
       'exp2.desc': '<strong>Kurumsal Müşteri İlişkileri Departmanı\'nda</strong> yarı zamanlı backend geliştirici olarak çalıştım. <strong>Java</strong> ve <strong>Spring</strong> kullanarak mevcut kurumsal servislerin bakımına ve geliştirilmesine katkıda bulundum.',
-      'exp3.role': 'Backend Geliştirme Stajyeri', 'exp3.type': 'Staj · İstanbul, TR', 'exp3.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Tekhnelogos', 'exp3.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Haz 2024 – Ağu 2024',
+      'exp3.role': 'Backend Geliştirme Stajyeri', 'exp3.type': 'Staj · İstanbul, TR', 'exp3.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Tekhnelogos', 'exp3.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Haz 2024 – Ağu 2024',
       'exp3.desc': '.NET kullanarak dahili hedef izleme ve raporlamayı sağlayan <strong>OKR (Hedefler ve Temel Sonuçlar)</strong> takip sistemi geliştirdim.',
-      'exp4.role': 'Mobil Uygulama Geliştirme Stajyeri', 'exp4.type': 'Staj · İstanbul, TR', 'exp4.comp': '<svg class="ic" aria-hidden="true"><use href="icons.svg#building"></use></svg> Kafein Teknoloji Çözümleri', 'exp4.date': '<svg class="ic" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Tem 2022 – Ağu 2022',
+      'exp4.role': 'Mobil Uygulama Geliştirme Stajyeri', 'exp4.type': 'Staj · İstanbul, TR', 'exp4.comp': '<svg class="ic" aria-hidden="true"><use href="#building"></use></svg> Kafein Teknoloji Çözümleri', 'exp4.date': '<svg class="ic" aria-hidden="true"><use href="#calendar"></use></svg> Tem 2022 – Ağu 2022',
       'exp4.desc': 'Java ve Android Studio kullanarak gerçek zamanlı API verileri ile modern UI bileşenlerini entegre eden bir <strong>hava durumu uygulaması</strong> geliştirdim.',
       'certs.title': 'Eğitimler & Sertifikalar',
       'vol.section.title': 'Gönüllü <span class="text-gradient">Deneyimi</span>',
