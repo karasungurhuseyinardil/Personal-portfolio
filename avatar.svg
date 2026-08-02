@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Hüseyin Ardıl Karasungur illüstrasyonu">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1b1443"/>
+      <stop offset="100%" stop-color="#082a3a"/>
+    </linearGradient>
+    <linearGradient id="hoodie" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <clipPath id="circle">
+      <circle cx="120" cy="120" r="120"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#circle)">
+    <rect width="240" height="240" fill="url(#bg)"/>
+
+    <g fill="#ffffff" opacity="0.07" font-family="monospace" font-size="14">
+      <text x="14" y="42">&lt;/&gt;</text>
+      <text x="198" y="66">{ }</text>
+      <text x="22" y="198">;</text>
+      <text x="202" y="180">()</text>
+    </g>
+    <circle cx="120" cy="120" r="96" fill="none" stroke="#8b5cf6" stroke-opacity="0.16" stroke-width="1.5"/>
+
+    <!-- omuzlar -->
+    <path d="M26 240c0-45 42-72 94-72s94 27 94 72z" fill="url(#hoodie)"/>
+    <!-- yaka -->
+    <path d="M106 170l14 18 14-18c-4-1-9-2-14-2s-10 1-14 2z" fill="#0b1220" opacity="0.4"/>
+
+    <!-- boyun -->
+    <path d="M105 148h30v24c0 7-30 7-30 0z" fill="#c98a63"/>
+    <path d="M105 148h30v8c-6 7-24 7-30 0z" fill="#ac7452"/>
+
+    <!-- kulaklar -->
+    <ellipse cx="81" cy="115" rx="7" ry="9.5" fill="#d9986f"/>
+    <ellipse cx="159" cy="115" rx="7" ry="9.5" fill="#d9986f"/>
+
+    <!-- yüz -->
+    <path d="M85 88c0-22 15-37 35-37s35 15 35 37v24c0 25-15 42-35 42s-35-17-35-42z" fill="#e0a17c"/>
+
+    <!-- saç -->
+    <path d="M81 95c-2-30 16-49 39-49s41 19 39 49c-3-6-5-13-6-20-11 10-27 14-46 11-9-2-16-5-20-9-2 6-4 12-6 18z" fill="#241a17"/>
+    <path d="M96 57c9-6 22-8 33-4-11 0-23 3-33 9z" fill="#3a2b26"/>
+
+    <!-- kaşlar -->
+    <path d="M96 99c5-4 14-4 19 0" stroke="#241a17" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M125 99c5-4 14-4 19 0" stroke="#241a17" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+    <!-- gözlük -->
+    <g stroke="#111827" stroke-width="3.5" fill="#ffffff" fill-opacity="0.10">
+      <rect x="91" y="106" width="27" height="21" rx="8"/>
+      <rect x="122" y="106" width="27" height="21" rx="8"/>
+      <path d="M118 114h4" fill="none"/>
+      <path d="M91 112l-9 3" fill="none"/>
+      <path d="M149 112l9 3" fill="none"/>
+    </g>
+
+    <!-- gözler -->
+    <circle cx="104.5" cy="117" r="3.6" fill="#1f2937"/>
+    <circle cx="135.5" cy="117" r="3.6" fill="#1f2937"/>
+
+    <!-- burun -->
+    <path d="M120 121v10c0 2-2 3-5 3" stroke="#bd7d53" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- gülümseme -->
+    <path d="M109 143c4 5 18 5 22 0" stroke="#96543a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="120" cy="120" r="118" fill="none" stroke="#8b5cf6" stroke-opacity="0.55" stroke-width="3"/>
+</svg>
