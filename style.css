@@ -706,14 +706,6 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
     margin-bottom: 1rem;
 }
 
-.name-code {
-    font-family: var(--font-code);
-    color: var(--clr-primary);
-    font-size: .6em;
-    margin-right: .4em;
-    vertical-align: middle;
-}
-
 .name-main {
     background: var(--grad-main);
     -webkit-background-clip: text;
@@ -1976,6 +1968,22 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
         display: flex;
     }
 
+    /* Dar ekranda 2rem'lik yan boşluk kontrolleri sağa taşırıyordu */
+    .nav-container {
+        padding: 0 1rem;
+        gap: .5rem;
+    }
+
+    .nav-brand {
+        font-size: 1.25rem;
+        min-width: 0;
+    }
+
+    .nav-controls {
+        flex-shrink: 0;
+        gap: .35rem;
+    }
+
     .hero-name {
         font-size: 2.5rem;
     }
@@ -2179,6 +2187,37 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
 ═══════════════════════════════════════════════════════════ */
 
 @media (max-width:480px) {
+
+    /* 360px sınıfı telefonlarda üst bar: marka + 3 kontrol sığmalı,
+       menü butonu ekranın dışında kalmamalı */
+    .nav-container {
+        padding: 0 .75rem;
+        gap: .35rem;
+    }
+
+    .nav-brand {
+        font-size: 1.1rem;
+    }
+
+    .lang-toggle {
+        padding: 0 .5rem;
+        font-size: .75rem;
+    }
+
+    .theme-toggle,
+    .menu-toggle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .menu-toggle {
+        padding: .6rem;
+    }
+
+    .hero-name {
+        font-size: 2.1rem;
+    }
+
     .hero-btns {
         flex-direction: column;
         align-items: stretch;
