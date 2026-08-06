@@ -1863,7 +1863,29 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════════════ */
-@media (max-width:1024px) {
+/* Üst bar 1024px'de taşıyordu: bağlantılar + kontroller 1044px (TR'de 1052px)
+   yer istiyor, 1024px'de yalnızca 1024px var. Kontroller sıkışıyor, "TR"
+   etiketi küre ikonunun altına kayıyor, Türkçe'de bağlantı satırı ikiye
+   bölünüp 72px'lik bara sığmıyordu. Yalnızca yerin yetmediği aralıkta
+   iç boşluklar daraltılıyor; 1100px üstünde hiçbir şey değişmiyor. */
+@media (max-width:1100px) {
+    .nav-container {
+        padding: 0 1.25rem;
+        gap: .75rem;
+    }
+
+    .nav-menu {
+        gap: .15rem;
+    }
+
+    .nav-link {
+        padding: .5rem .6rem;
+    }
+}
+
+/* 1024px masaüstü genişliklerinden biri: tam 1024px'de tablet düzenine
+   düşmemesi için sınır 1023.98px'e çekildi. */
+@media (max-width:1023.98px) {
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
@@ -2255,6 +2277,36 @@ body:has(input:hover, input:focus, textarea:hover, textarea:focus, select:hover,
 
     .projects-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MASAÜSTÜ ARALIĞI — SÜTUN SAYISI KARARLILIĞI (1024px ve üzeri)
+   auto-fill eşikleri 1280px'lik kap için seçilmişti; 1024px'de içerik
+   genişliği 960px'e indiğinde ızgaralar bir sütun kaybediyordu:
+   sertifikalar 3x2 iken 2x3'e düşüyor, gönüllülük 3 rayı 2'ye iniyor
+   (kartlar 392px'den 470px'e büyüyordu). Alt sınır 300px'e çekilince aynı
+   sütun sayısı 1024px'e kadar korunuyor. 1280px'de sonuç birebir aynı:
+   her ikisi de 3 sütun kalmaya devam ediyor (4 sütun 1216px'e sığmıyor).
+   1024px altındaki tablet/mobil davranışı bilinçli olarak kapsam dışı.
+═══════════════════════════════════════════════════════════ */
+@media (min-width:1024px) {
+
+    .certs-grid,
+    .volunteer-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    /* Sütunlar arası boşluk ≥1280px'de tam 4rem (yani hiç değişmiyor),
+       1024px'e inerken 2.5rem'e kadar daralıyor. Hero'da görsel sütun
+       320px sabit, about'ta sağdaki 2x2 kart paneli var; boşluk sabit
+       kalsaydı dar masaüstünde iki sütun da gereğinden fazla sıkışıyordu.
+       Kural yalnızca iki sütunlu aralıkta geçerli: 1024px altında bu
+       ızgaralar tek sütuna indiği için gap dikey ritme dönüşüyor ve
+       oradaki 4rem'lik satır aralığı korunmalı. */
+    .hero-container,
+    .about-grid {
+        gap: clamp(2.5rem, 9.375vw - 56px, 4rem);
     }
 }
 
