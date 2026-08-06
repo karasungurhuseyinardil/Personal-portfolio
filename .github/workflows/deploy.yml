@@ -10,9 +10,16 @@ permissions:
   pages:    write
   id-token: write
 
+# Aynı anda tek deploy çalışsın, ama çalışmakta olanı İPTAL ETME.
+# cancel-in-progress: true iken arka arkaya iki push atıldığında ilk run,
+# Pages deployment'ı zaten oluşturulduktan sonra iptal ediliyordu. Actions
+# tarafı ölse de Pages backend'inde o deployment asılı kalıyor ve depo başına
+# tek sıra olduğu için sonraki deploy'lar "deployment_queued"da bekleyip
+# 10 dakikada "Timeout reached, aborting!" ile düşüyor. GitHub'ın resmi Pages
+# şablonu da bu yüzden production deploy'ların bitmesine izin veriyor.
 concurrency:
   group:            pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
