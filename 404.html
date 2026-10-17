@@ -241,11 +241,26 @@
     <script>
         (function () {
             /* Dil: önce sitede seçilen dil (main.js 'pf-lang'), yoksa tarayıcı dili */
-            var lang;
-            try { lang = localStorage.getItem('pf-lang'); } catch (e) { }
-            if (lang !== 'tr' && lang !== 'en') {
-                lang = (navigator.language || 'en').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+            /* Ana sayfadaki detectLang() ile aynı öncelik sırası:
+               kayıtlı tercih > tarayıcı dili > saat dilimi > İngilizce.
+               Eski hâli yalnızca navigator.language'a bakıyordu ve indexOf('tr')
+               kullandığı için 'trv' gibi alakasız kodları da Türkçe sayıyordu. */
+            var lang = null;
+            try {
+                var saved = localStorage.getItem('pf-lang');
+                if (saved === 'tr' || saved === 'en') lang = saved;
+            } catch (e) { }
+            if (!lang) {
+                var prefs = (navigator.languages && navigator.languages.length)
+                    ? navigator.languages : [navigator.language || ''];
+                if (prefs.some(function (x) { return /^tr(-|$)/i.test(x); })) lang = 'tr';
             }
+            if (!lang) {
+                try {
+                    if (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Istanbul') lang = 'tr';
+                } catch (e) { }
+            }
+            lang = lang || 'en';
 
             var t = {
                 en: {

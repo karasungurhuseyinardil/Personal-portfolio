@@ -8,7 +8,42 @@
     <!-- Giriş animasyonları yalnızca JS varsa devreye girsin. Bu satır olmadan
          .reveal-* blokları opacity:0 kalır; JS çalışmayan tarayıcıda ve JS
          render'ı zayıf arama motorlarında sayfa boş görünür. -->
-    <script>document.documentElement.classList.add('js')</script>
+    <script>
+        /* 'js' sınıfı: CSS'in JS varlığına göre davranması için (bkz. .js .reveal-*).
+           Dil kararı burada, <body> ayrıştırılmadan önce veriliyor. Öncelik sırası
+           main.js içindeki detectLang() ile birebir aynı tutulmalı — ikisi ayrışırsa
+           sayfa bir dilde açılıp diğerine atlar. */
+        (function () {
+            var d = document.documentElement;
+            d.classList.add('js');
+            var l = null;
+            try {
+                var saved = localStorage.getItem('pf-lang');
+                if (saved === 'tr' || saved === 'en') l = saved;
+            } catch (e) { }
+            if (!l) {
+                var p = (navigator.languages && navigator.languages.length)
+                    ? navigator.languages : [navigator.language || ''];
+                if (p.some(function (x) { return /^tr(-|$)/i.test(x); })) l = 'tr';
+            }
+            if (!l) {
+                try {
+                    if (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Istanbul') l = 'tr';
+                } catch (e) { }
+            }
+            l = l || 'en';
+            window.__PF_LANG = l;
+            d.lang = l;
+            /* Çeviri yapılacaksa gövdeyi kısa süre gizle: ziyaretçi önce İngilizce
+               metni görüp sonra Türkçeye atlamasın. İngilizce ziyaretçi hiç beklemez.
+               main.js yüklenemezse sayfa boş kalmasın diye 800 ms emniyet payı var;
+               JS kapalıysa bu betik hiç çalışmaz, sınıf eklenmez, içerik görünür. */
+            if (l === 'tr') {
+                d.classList.add('lang-pending');
+                setTimeout(function () { d.classList.remove('lang-pending'); }, 800);
+            }
+        })();
+    </script>
     <meta name="description"
         content="Hüseyin Ardıl Karasungur — Backend & Full Stack Developer skilled in Java, .NET and React.">
     <link rel="icon" type="image/svg+xml"

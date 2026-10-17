@@ -156,6 +156,13 @@ body {
     transition: width .1s linear !important;
 }
 
+/* Dil değişimi bitene kadar gövdeyi gizler. Sınıf yalnızca <head>'deki betik
+   Türkçe'ye karar verdiyse ekleniyor ve applyLang() biter bitmez kaldırılıyor;
+   betiğin 800 ms'lik emniyet zamanlayıcısı da her hâlükârda kaldırıyor. */
+.lang-pending body {
+    visibility: hidden;
+}
+
 img {
     max-width: 100%;
     display: block;

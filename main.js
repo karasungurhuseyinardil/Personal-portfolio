@@ -1059,8 +1059,13 @@ function showToast(msg, type = 'success') {
     return 'en';
   }
 
-  let lang = detectLang();
+  /* Kararı normalde <head>'deki betik vermiş olur (bkz. index.html); orada bir
+     aksilik olursa buradaki detectLang() yedek olarak devreye girer. */
+  let lang = (window.__PF_LANG === 'tr' || window.__PF_LANG === 'en')
+    ? window.__PF_LANG
+    : detectLang();
   applyLang(lang);
+  document.documentElement.classList.remove('lang-pending');
 
   btn.addEventListener('click', () => {
     lang = lang === 'en' ? 'tr' : 'en';
@@ -1109,6 +1114,12 @@ function showToast(msg, type = 'success') {
     document.title = t['page.title'];
     const dm = document.querySelector('meta[name="description"]');
     if (dm) dm.content = t['meta.desc'];
+
+    /* Paylaşım önizlemesi aktif dille tutarlı olsun */
+    const ogl = document.querySelector('meta[property="og:locale"]');
+    const ogla = document.querySelector('meta[property="og:locale:alternate"]');
+    if (ogl) ogl.content = l === 'tr' ? 'tr_TR' : 'en_US';
+    if (ogla) ogla.content = l === 'tr' ? 'en_US' : 'tr_TR';
   }
 })();
 
