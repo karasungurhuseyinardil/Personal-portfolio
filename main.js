@@ -1035,8 +1035,31 @@ function showToast(msg, type = 'success') {
     ['#formSubject', 'form.ph.subject'], ['#formMessage', 'form.ph.msg'],
   ];
 
-  let lang = localStorage.getItem('pf-lang') || 'en';
-  // Wait for DOM to be fully ready if needed, but since script is at end, it's fine.
+  /* Dil seçimi: kayıtlı tercih > ziyaretçinin kültürü > İngilizce.
+     Elle yapılan seçim her zaman kazanır; bir kez TR/EN'e basan kullanıcı
+     sonraki ziyaretlerinde otomatik algılamaya geri dönmez. Algılanan dil
+     bilerek localStorage'a yazılmıyor — yazsaydık 'tercih' sanılır ve
+     kullanıcı dil ayarını değiştirdiğinde bir daha güncellenmezdi. */
+  function detectLang() {
+    const saved = localStorage.getItem('pf-lang');
+    if (saved === 'tr' || saved === 'en') return saved;
+
+    /* navigator.languages tarayıcının dil sıralaması: ["tr-TR","tr","en-US"] */
+    const prefs = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || ''];
+    if (prefs.some(l => /^tr(-|$)/i.test(l))) return 'tr';
+
+    /* Arayüz dili İngilizce ama cihaz Türkiye'de olabilir; saat dilimi
+       ikinci sinyal. Intl eski tarayıcılarda garanti değil, bu yüzden try. */
+    try {
+      if (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Istanbul') return 'tr';
+    } catch (e) { /* Intl yoksa dil sinyaliyle yetin */ }
+
+    return 'en';
+  }
+
+  let lang = detectLang();
   applyLang(lang);
 
   btn.addEventListener('click', () => {
